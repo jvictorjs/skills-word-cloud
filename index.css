@@ -1,0 +1,67 @@
+.logo {
+    transition: transform 0.5s;
+    vertical-align: middle;
+}
+
+.row {
+    border: 1px solid grey !important;
+    /*background-color: red !important; */
+    height: 13px;
+}
+
+.rowContent1 {
+    background-color: rgb(248, 169, 23) !important;
+    height: 55px;
+    z-index: 5;
+    border-radius: 5px;
+    padding: 0px 10px 0px 10px;
+    position: absolute;
+}
+
+.rowContent2 {
+    background-color: rgb(147, 228, 147) !important;
+
+    z-index: 4;
+    border-radius: 5px;
+    padding: 0px 10px 0px 10px;
+    position: absolute;
+    cursor: default;
+}
+
+.rowContent3 {
+    background-color: lightblue !important;
+
+    z-index: 3;
+    border-radius: 5px;
+    padding: 0px 10px 0px 10px;
+    position: absolute;
+    cursor: default;
+}
+
+.rowContent4 {
+    background-color: rgb(207, 207, 207) !important;
+
+    z-index: 2;
+    border-radius: 5px;
+    padding: 0px 10px 0px 10px;
+    position: absolute;
+    cursor: default;
+}
+
+.rowContent5 {
+    background-color: rgb(235, 235, 235) !important;
+
+    z-index: 1;
+    border-radius: 5px;
+    padding: 0px 10px 0px 10px;
+    position: absolute;
+    cursor: default;
+}
+
+.logo:hover {
+    -ms-transform: scale(1.35);
+    /* IE 9 */
+    -webkit-transform: scale(1.35);
+    /* Safari 3-8 */
+    transform: scale(1.35);
+}
