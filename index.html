@@ -86,6 +86,13 @@
                                                     @change="toggleSetting('isGrayscalePalette')"></v-switch>
                                             </v-sheet>
                                         </v-sheet>
+                                        <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
+                                            <v-sheet class="text-end elevation-0" width="182">Animations</v-sheet>
+                                            <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
+                                                <v-switch v-model="settings.isAnimationsEnabled" class="mt-0 ml-5" inset dense hide-spin-buttons hide-details
+                                                    @change="toggleSetting('isAnimationsEnabled')"></v-switch>
+                                            </v-sheet>
+                                        </v-sheet>
                                     </v-sheet>
                                 </v-menu>
                             </v-sheet>
@@ -224,11 +231,12 @@
                         isShowPersonalProjects: false,
                     },
                     settings: {
-                        isGrayscalePalette: false
+                        isGrayscalePalette: false,
+                        isAnimationsEnabled: true,
                     },
                     techs: TECHS,
                     allTechsElementsIds: [],
-                    isProductionMode: false,
+                    isProductionMode: true,
                 }
             },
             created() {
@@ -252,11 +260,11 @@
                                         this.applyFadeIn(TECHS.filter(t => t.classType === 5).map(t => t.name + '_tech'));
                                         document.querySelector(':root').style.setProperty('--itemMinimumOpacity', 0.09)
                                         this.isAllTechsInitialFadedIn = true;
-                                    }, 5400);
-                                }, 4400);
-                            }, 3400);
-                        }, 3000);
-                    }, 1400);
+                                    }, this.settings.isAnimationsEnabled ? 5400 : 0);
+                                }, this.settings.isAnimationsEnabled ? 4400 : 0);
+                            }, this.settings.isAnimationsEnabled ? 3400 : 0);
+                        }, this.settings.isAnimationsEnabled ? 3000 : 0);
+                    }, this.settings.isAnimationsEnabled ? 1400 : 0);
                 } else {
                     setTimeout(() => {
                         document.querySelector(':root').style.setProperty('--itemMinimumOpacity', 0.09)
@@ -289,6 +297,15 @@
                         document.querySelector(':root').style.setProperty('--itemContent3BGcolor', 'lightblue')
                         document.querySelector(':root').style.setProperty('--itemContent4BGcolor', 'rgb(207, 207, 207)')
                         document.querySelector(':root').style.setProperty('--itemContent5BGcolor', 'rgb(235, 235, 235)')
+                    }
+                    if (this.settings.isAnimationsEnabled) {
+                        document.querySelector(':root').style.setProperty('--fadeInDuration', '1.3s')
+                        document.querySelector(':root').style.setProperty('--fadeOutDuration', '1.3s')
+                        //console.log(document.querySelector(':root').style.getPropertyValue('--fadeInDuration'))
+                    } else {
+                        document.querySelector(':root').style.setProperty('--fadeInDuration', '0.1s')
+                        document.querySelector(':root').style.setProperty('--fadeOutDuration', '0.1s')
+                        //console.log(document.querySelector(':root').style.getPropertyValue('--fadeOutDuration'))
                     }
                 },
                 applyFilters() {

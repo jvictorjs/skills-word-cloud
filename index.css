@@ -1,7 +1,7 @@
 :root {
   --itemMinimumOpacity: 0;
-  --fadeInDuration: 1.5s;
-  --fadeOutDuration: 1.5s;
+  --fadeInDuration: 1.3s;
+  --fadeOutDuration: 1.3s;
   --itemContent1BGcolor: rgb(248, 169, 23);
   --itemContent2BGcolor: rgb(147, 228, 147);
   --itemContent3BGcolor: lightblue;
