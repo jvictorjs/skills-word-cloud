@@ -50,8 +50,9 @@
                             <v-sheet style="position: relative; z-index: 999;">
                                 <v-menu offset-x content-class="rounded-lg elevation-10 grey" :close-on-content-click="true" open-on-hover>
                                     <template v-slot:activator="{ on, attrs }">
-                                        <v-btn class="mr-1 transparent" v-bind="attrs" v-on="on" icon style="position: absolute; left: 100%;">
-                                            <v-icon class="transparent" size="42">mdi-dots-vertical</v-icon>
+                                        <div id="menu_overlay" style="outline: rgba(0,0,0,1) solid 10000px;"> </div>
+                                        <v-btn id="menu_btn" class="mr-1 transparent" v-bind="attrs" v-on="on" icon style="position: absolute; left: 100%;">
+                                            <v-icon class="transparent" size="48">mdi-dots-vertical</v-icon>
                                         </v-btn>
                                     </template>
                                     <v-sheet class="d-flex flex-column align-center justify-center pa-2 rounded-lg menu grey--text elevation-0" width="282">
@@ -156,8 +157,8 @@
 
                             <v-sheet v-for="tech in techs" key="tech.name">
                                 <v-hover v-slot="{ hover }">
-                                    <v-sheet :class="itemClasses[tech.classType] + ' itemContent'+tech.classType + ' item zeroOpacity '" :style="'top: '+tech.top+'; left: '+tech.left+';'"
-                                        :elevation="3" :id="tech.name+'_tech'">
+                                    <v-sheet :class="itemClasses[tech.classType] + ' itemContent'+tech.classType + ' item '" :style="'top: '+tech.top+'; left: '+tech.left+';'" :elevation="3"
+                                        :id="tech.name+'_tech'">
                                         <!-- :elevation="hover ? itemsHovers[tech.classType] : 3" vuetify hover + css hover CRASH -->
                                         {{tech.name}}
                                     </v-sheet>
@@ -246,8 +247,10 @@
             mounted() {
                 console.log('mounted ' + new Date())
                 this.isLoading = false
-                setTimeout(() => { console.log(document.querySelector('#app').style.display = 'inline') }, 300);
+                setTimeout(() => { document.querySelector('#app').style.display = 'inline' }, 300);
                 if (this.isProductionMode) {
+                    console.log('running opening animations...')
+                    this.menuOverlayOpening();
                     setTimeout(() => {
                         this.applyFadeIn(['javascript_tech', 'html_tech', 'css_tech']);
                         setTimeout(() => {
@@ -258,16 +261,22 @@
                                     this.applyFadeIn(TECHS.filter(t => t.classType === 4).map(t => t.name + '_tech'));
                                     setTimeout(() => {
                                         this.applyFadeIn(TECHS.filter(t => t.classType === 5).map(t => t.name + '_tech'));
-                                        document.querySelector(':root').style.setProperty('--itemMinimumOpacity', 0.09)
-                                        this.isAllTechsInitialFadedIn = true;
-                                    }, this.settings.isAnimationsEnabled ? 5400 : 0);
-                                }, this.settings.isAnimationsEnabled ? 4400 : 0);
+                                        setTimeout(() => {
+                                            this.menuOverlayFocus();
+                                            setTimeout(() => {
+                                                this.isAllTechsInitialFadedIn = true;
+                                                this.setCSSvariableValue('itemMinimumOpacity', 0.09)
+                                                console.log('opening animations ended')
+                                            }, this.settings.isAnimationsEnabled ? 5000 : 0)
+                                        }, this.settings.isAnimationsEnabled ? 1000 : 0);
+                                    }, this.settings.isAnimationsEnabled ? 3400 : 0);
+                                }, this.settings.isAnimationsEnabled ? 3300 : 0);
                             }, this.settings.isAnimationsEnabled ? 3400 : 0);
-                        }, this.settings.isAnimationsEnabled ? 3000 : 0);
-                    }, this.settings.isAnimationsEnabled ? 1400 : 0);
+                        }, this.settings.isAnimationsEnabled ? 2000 : 0);
+                    }, this.settings.isAnimationsEnabled ? 3000 : 0);
                 } else {
                     setTimeout(() => {
-                        document.querySelector(':root').style.setProperty('--itemMinimumOpacity', 0.09)
+                        this.setCSSvariableValue('itemMinimumOpacity', 0.09)
                         this.applyFadeIn(this.allTechsElementsIds);
                         this.isAllTechsInitialFadedIn = true;
                     }, 300);
@@ -286,27 +295,28 @@
                 },
                 applySettings() {
                     if (this.settings.isGrayscalePalette) {
-                        document.querySelector(':root').style.setProperty('--itemContent1BGcolor', 'rgb(165,165,165)')
-                        document.querySelector(':root').style.setProperty('--itemContent2BGcolor', 'rgb(190,190,190)')
-                        document.querySelector(':root').style.setProperty('--itemContent3BGcolor', 'rgb(202,202,202)')
-                        document.querySelector(':root').style.setProperty('--itemContent4BGcolor', 'rgb(222, 222, 222)')
-                        document.querySelector(':root').style.setProperty('--itemContent5BGcolor', 'rgb(235, 235, 235)')
+                        this.setCSSvariableValue('itemContent1BGcolor', 'rgb(165,165,165)')
+                        this.setCSSvariableValue('itemContent2BGcolor', 'rgb(190,190,190)')
+                        this.setCSSvariableValue('itemContent3BGcolor', 'rgb(202,202,202)')
+                        this.setCSSvariableValue('itemContent4BGcolor', 'rgb(222, 222, 222)')
+                        this.setCSSvariableValue('itemContent5BGcolor', 'rgb(235, 235, 235)')
                     } else {
-                        document.querySelector(':root').style.setProperty('--itemContent1BGcolor', 'rgb(248, 169, 23)')
-                        document.querySelector(':root').style.setProperty('--itemContent2BGcolor', 'rgb(147, 228, 147)')
-                        document.querySelector(':root').style.setProperty('--itemContent3BGcolor', 'lightblue')
-                        document.querySelector(':root').style.setProperty('--itemContent4BGcolor', 'rgb(207, 207, 207)')
-                        document.querySelector(':root').style.setProperty('--itemContent5BGcolor', 'rgb(235, 235, 235)')
+                        this.setCSSvariableValue('itemContent1BGcolor', 'rgb(248, 169, 23)')
+                        this.setCSSvariableValue('itemContent2BGcolor', 'rgb(147, 228, 147)')
+                        this.setCSSvariableValue('itemContent3BGcolor', 'lightblue')
+                        this.setCSSvariableValue('itemContent4BGcolor', 'rgb(207, 207, 207)')
+                        this.setCSSvariableValue('itemContent5BGcolor', 'rgb(235, 235, 235)')
                     }
                     if (this.settings.isAnimationsEnabled) {
-                        document.querySelector(':root').style.setProperty('--fadeInDuration', '1.3s')
-                        document.querySelector(':root').style.setProperty('--fadeOutDuration', '1.3s')
-                        //console.log(document.querySelector(':root').style.getPropertyValue('--fadeInDuration'))
+                        this.setCSSvariableValue('fadeInDuration', '1.3s')
+                        this.setCSSvariableValue('fadeOutDuration', '1.3s')
                     } else {
-                        document.querySelector(':root').style.setProperty('--fadeInDuration', '0.1s')
-                        document.querySelector(':root').style.setProperty('--fadeOutDuration', '0.1s')
-                        //console.log(document.querySelector(':root').style.getPropertyValue('--fadeOutDuration'))
+                        this.setCSSvariableValue('fadeInDuration', '0.1s')
+                        this.setCSSvariableValue('fadeOutDuration', '0.1s')
                     }
+                },
+                setCSSvariableValue(propName, propVal) { // custom propertie = CSS variables
+                    document.querySelector(':root').style.setProperty('--' + propName, propVal)
                 },
                 applyFilters() {
                     console.log('applyFilters')
@@ -322,6 +332,25 @@
                     this.applyFadeIn(techsToFadeIn)
                     const techsToFadeOut = TECHS.filter(t => !techsToFadeIn.includes(t.name + '_tech')).map(t => t.name + '_tech')
                     this.applyFadeOut(techsToFadeOut)
+                },
+                menuOverlayOpening() {
+                    setTimeout(() => {
+                        this.applyFadeOut(['menu_overlay']);
+                    }, 1500);
+                },
+                menuOverlayFocus() {
+                    setTimeout(() => {
+                        this.applyFadeIn(['menu_overlay']);
+                        document.getElementById('menu_overlay').style.setProperty('outline', 'rgba(0,0,0,.75) solid 10000px');
+                        document.getElementById('menu_btn').classList.replace("transparent", 'white');
+                        setTimeout(() => {
+                            setTimeout(() => { document.getElementById('menu_btn').classList.replace("white", 'transparent'); }, this.settings.isAnimationsEnabled ? 1000 : 0);
+                            this.applyFadeOut(['menu_overlay']);
+                            setTimeout(() => {
+                                document.getElementById('menu_overlay').style.removeProperty('outline');
+                            }, this.settings.isAnimationsEnabled ? 1600 : 0)
+                        }, this.settings.isAnimationsEnabled ? 2500 : 0);
+                    }, this.settings.isAnimationsEnabled ? 1500 : 0);
                 },
                 applyFadeOut(elementsIdsArray) {
                     elementsIdsArray.map(el => {
