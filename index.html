@@ -16,7 +16,7 @@
     <div id="app" style="display: none;">
         <v-app>
             <v-main id="main">
-                <v-container v-if="!loading" class="px-5 py-0 grey lighten-2 d-flex flex-column align-center justify-space-between elevation-10 " fluid fill-height>
+                <v-container v-if="!isLoading" class="px-5 py-0 grey lighten-2 d-flex flex-column align-center justify-space-between elevation-10 " fluid fill-height>
                     <v-sheet class="transparent elevation-0" height="10%">
                         <v-sheet class="pa-3 d-flex flex-wrap align-start justify-space-around rounded-b-lg elevation-3" v-cloak>
                             <v-tooltip v-for="social in socialMedia" :key="social.name" bottom>
@@ -51,31 +51,39 @@
                                 <v-menu offset-x content-class="rounded-lg elevation-10 grey" :close-on-content-click="true" open-on-hover>
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-btn class="mr-1 transparent" v-bind="attrs" v-on="on" icon style="position: absolute; left: 100%;">
-                                            <v-icon class="transparent" size="33">mdi-dots-vertical</v-icon>
+                                            <v-icon class="transparent" size="42">mdi-dots-vertical</v-icon>
                                         </v-btn>
                                     </template>
                                     <v-sheet class="d-flex flex-column align-center justify-center pa-2 rounded-lg menu grey--text elevation-0" width="282">
-                                        <span class="text-h6 font-weight-bold grey--text  text--darken-1 ">Tech Filters</span>
-                                        <span v-if="!allTechsInitialFadedIn" class="text-subtitle-2 font-weight-medium">please wait full load...</span>
+                                        <span class="text-h6 font-weight-bold grey--text ">Tech Filters</span>
+                                        <span v-if="!isAllTechsInitialFadedIn" class="text-subtitle-2 font-weight-medium">please wait full load...</span>
                                         <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
                                             <v-sheet class="text-end elevation-0" width="182">Used in this website</v-sheet>
                                             <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
-                                                <v-switch :disabled="!allTechsInitialFadedIn" v-model="filters.isShowThisWebsiteTechs" class="mt-0 ml-5" inset dense hide-spin-buttons hide-details
+                                                <v-switch :disabled="!isAllTechsInitialFadedIn" v-model="filters.isShowThisWebsiteTechs" class="mt-0 ml-5" inset dense hide-spin-buttons hide-details
                                                     @change="toggleFilter('isShowThisWebsiteTechs')"></v-switch>
                                             </v-sheet>
                                         </v-sheet>
                                         <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
-                                            <v-sheet class="text-end elevation-0" width="182">Professional Experience</v-sheet>
+                                            <v-sheet class="text-end elevation-0" width="182">Professional experience</v-sheet>
                                             <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
-                                                <v-switch :disabled="!allTechsInitialFadedIn" v-model="filters.isShowProfessionalExperience" class="mt-0 ml-5" inset dense hide-spin-buttons
+                                                <v-switch :disabled="!isAllTechsInitialFadedIn" v-model="filters.isShowProfessionalExperience" class="mt-0 ml-5" inset dense hide-spin-buttons
                                                     hide-details @change="toggleFilter('isShowProfessionalExperience')"></v-switch>
                                             </v-sheet>
                                         </v-sheet>
                                         <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
-                                            <v-sheet class="text-end elevation-0" width="182">Personal Projects</v-sheet>
+                                            <v-sheet class="text-end elevation-0" width="182">Personal projects</v-sheet>
                                             <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
-                                                <v-switch :disabled="!allTechsInitialFadedIn" v-model="filters.isShowPersonalProjects" class="mt-0 ml-5" inset dense hide-spin-buttons hide-details
+                                                <v-switch :disabled="!isAllTechsInitialFadedIn" v-model="filters.isShowPersonalProjects" class="mt-0 ml-5" inset dense hide-spin-buttons hide-details
                                                     @change="toggleFilter('isShowPersonalProjects')"></v-switch>
+                                            </v-sheet>
+                                        </v-sheet>
+                                        <span class="mt-5 text-h6 font-weight-bold grey--text  ">Settings</span>
+                                        <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
+                                            <v-sheet class="text-end elevation-0" width="182">Grayscale palette</v-sheet>
+                                            <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
+                                                <v-switch v-model="settings.isGrayscalePalette" class="mt-0 ml-5" inset dense hide-spin-buttons hide-details
+                                                    @change="toggleSetting('isGrayscalePalette')"></v-switch>
                                             </v-sheet>
                                         </v-sheet>
                                     </v-sheet>
@@ -185,8 +193,8 @@
 
             data() {
                 return {
-                    loading: true,
-                    allTechsInitialFadedIn: false,
+                    isLoading: true,
+                    isAllTechsInitialFadedIn: false,
                     minimumScreenWidth: 900,
                     minimumScreenHeight: 700,
                     socialMedia: [
@@ -215,9 +223,12 @@
                         isShowProfessionalExperience: false,
                         isShowPersonalProjects: false,
                     },
+                    settings: {
+                        isGrayscalePalette: false
+                    },
                     techs: TECHS,
                     allTechsElementsIds: [],
-                    productionMode: false,
+                    isProductionMode: false,
                 }
             },
             created() {
@@ -226,9 +237,9 @@
             },
             mounted() {
                 console.log('mounted ' + new Date())
-                this.loading = false
+                this.isLoading = false
                 setTimeout(() => { console.log(document.querySelector('#app').style.display = 'inline') }, 300);
-                if (this.productionMode) {
+                if (this.isProductionMode) {
                     setTimeout(() => {
                         this.applyFadeIn(['javascript_tech', 'html_tech', 'css_tech']);
                         setTimeout(() => {
@@ -240,7 +251,7 @@
                                     setTimeout(() => {
                                         this.applyFadeIn(TECHS.filter(t => t.classType === 5).map(t => t.name + '_tech'));
                                         document.querySelector(':root').style.setProperty('--itemMinimumOpacity', 0.09)
-                                        this.allTechsInitialFadedIn = true;
+                                        this.isAllTechsInitialFadedIn = true;
                                     }, 5400);
                                 }, 4400);
                             }, 3400);
@@ -250,15 +261,35 @@
                     setTimeout(() => {
                         document.querySelector(':root').style.setProperty('--itemMinimumOpacity', 0.09)
                         this.applyFadeIn(this.allTechsElementsIds);
-                        this.allTechsInitialFadedIn = true;
+                        this.isAllTechsInitialFadedIn = true;
                     }, 300);
                 }
             },
             methods: {
+                toggleSetting(settingName) {
+                    console.log('toggleSetting', settingName)
+                    this.settings.settingName = !this.settings.settingName
+                    this.applySettings()
+                },
                 toggleFilter(filterName) {
                     console.log('toggleFilter', filterName)
                     this.filters.filterName = !this.filters.filterName
                     this.applyFilters();
+                },
+                applySettings() {
+                    if (this.settings.isGrayscalePalette) {
+                        document.querySelector(':root').style.setProperty('--itemContent1BGcolor', 'rgb(165,165,165)')
+                        document.querySelector(':root').style.setProperty('--itemContent2BGcolor', 'rgb(190,190,190)')
+                        document.querySelector(':root').style.setProperty('--itemContent3BGcolor', 'rgb(202,202,202)')
+                        document.querySelector(':root').style.setProperty('--itemContent4BGcolor', 'rgb(222, 222, 222)')
+                        document.querySelector(':root').style.setProperty('--itemContent5BGcolor', 'rgb(235, 235, 235)')
+                    } else {
+                        document.querySelector(':root').style.setProperty('--itemContent1BGcolor', 'rgb(248, 169, 23)')
+                        document.querySelector(':root').style.setProperty('--itemContent2BGcolor', 'rgb(147, 228, 147)')
+                        document.querySelector(':root').style.setProperty('--itemContent3BGcolor', 'lightblue')
+                        document.querySelector(':root').style.setProperty('--itemContent4BGcolor', 'rgb(207, 207, 207)')
+                        document.querySelector(':root').style.setProperty('--itemContent5BGcolor', 'rgb(235, 235, 235)')
+                    }
                 },
                 applyFilters() {
                     console.log('applyFilters')

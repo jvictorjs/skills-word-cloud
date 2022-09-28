@@ -42,8 +42,8 @@ const TECHS = [
   { classType: 4, top: "46%", left: "83%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "Tailwind CSS" },
   { classType: 5, top: "65%", left: "86%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "SASS" },
   { classType: 5, top: "44%", left: "75%", filtersFlags: { isThisProject: true, pro: true, personal: true }, name: "Flexbox" },
-  { classType: 5, top: "60%", left: "69%", filtersFlags: { isThisProject: true, pro: false, personal: true }, name: "Animations" },
-  { classType: 5, top: "66%", left: "76%", filtersFlags: { isThisProject: true, pro: false, personal: true }, name: "Variables" },
+  { classType: 4, top: "66%", left: "73%", filtersFlags: { isThisProject: true, pro: false, personal: true }, name: "Animations" },
+  { classType: 5, top: "59%", left: "69%", filtersFlags: { isThisProject: true, pro: false, personal: true }, name: "Variables" },
 
   { classType: 4, top: "79%", left: "50%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "GraphQL" },
 
