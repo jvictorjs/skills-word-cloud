@@ -12,7 +12,6 @@ const TECHS = [
   { classType: 2, top: "62%", left: "34%", isPresentInThisProject: false,  name: "REST APIs" },
   { classType: 4, top: "75%", left: "35%", isPresentInThisProject: false,  name: "Twitter API" },
   { classType: 3, top: "69%", left: "34%", isPresentInThisProject: false,  name: "Telegram Bots API" },
-  { classType: 5, top: "66%", left: "23%", isPresentInThisProject: false,  name: "HTTP Methods" },
   { classType: 4, top: "56%", left: "35%", isPresentInThisProject: false,  name: "JSON Server" },
   
   { classType: 3, top: "9%", left: "2%", isPresentInThisProject: false,  name: "Google Sheets" },
@@ -44,8 +43,8 @@ const TECHS = [
 
   { classType: 4, top: "46%", left: "83%", isPresentInThisProject: false,  name: "Tailwind CSS" },
   { classType: 5, top: "65%", left: "86%", isPresentInThisProject: false,  name: "SASS" },
-  { classType: 5, top: "44%", left: "75%", isPresentInThisProject: false,  name: "Flexbox" },
-  { classType: 5, top: "66%", left: "73%", isPresentInThisProject: false,  name: "Animations" },
+  { classType: 5, top: "44%", left: "75%", isPresentInThisProject: true,  name: "Flexbox" },
+  { classType: 5, top: "66%", left: "73%", isPresentInThisProject: true,  name: "Animations" },
 
   { classType: 4, top: "79%", left: "50%", isPresentInThisProject: false,  name: "GraphQL" },
 
@@ -56,8 +55,8 @@ const TECHS = [
   { classType: 5, top: "84%", left: "80%", isPresentInThisProject: false,  name: "SQLite" },
   { classType: 5, top: "84%", left: "71%", isPresentInThisProject: false,  name: "SQL Server" },
 
-  { classType: 5, top: "87%", left: "40%", isPresentInThisProject: true,  name: "Git" },
-  { classType: 3, top: "91%", left: "43%", isPresentInThisProject: true,  name: "GitHub" },
+  { classType: 3, top: "87%", left: "40%", isPresentInThisProject: true,  name: "Git" },
+  { classType: 4, top: "91%", left: "43%", isPresentInThisProject: true,  name: "GitHub" },
 
   { classType: 5, top: "64%", left: "11%", isPresentInThisProject: false,  name: "Socket.io" },
 

@@ -4,9 +4,14 @@
 }
 
 .row {
-    border: 1px solid grey !important;
-    /*background-color: red !important; */
-    height: 13px;
+}
+
+.row:hover{
+    -ms-transform: scale(1.35);
+    /* IE 9 */
+    -webkit-transform: scale(1.35);
+    /* Safari 3-8 */
+    transform: scale(1.35);
 }
 
 .rowContent1 {
@@ -58,10 +63,21 @@
     cursor: default;
 }
 
-.logo:hover {
-    -ms-transform: scale(1.35);
-    /* IE 9 */
-    -webkit-transform: scale(1.35);
-    /* Safari 3-8 */
-    transform: scale(1.35);
+
+.fadeOut {
+    opacity: 0.09;
+    -webkit-transition: opacity 2s ease-out;
+       -moz-transition: opacity 2s ease-out;
+        -ms-transition: opacity 2s ease-out;
+         -o-transition: opacity 2s ease-out;
+            transition: opacity 2s ease-out;
+}
+
+.fadeIn {
+    opacity: 1;
+    -webkit-transition: opacity 2s ease-out;
+       -moz-transition: opacity 2s ease-out;
+        -ms-transition: opacity 2s ease-out;
+         -o-transition: opacity 2s ease-out;
+            transition: opacity 2s ease-out;
 }
