@@ -55,10 +55,27 @@
                                         </v-btn>
                                     </template>
                                     <v-sheet class="d-flex flex-column align-center justify-center pa-2 rounded-lg menu grey--text elevation-0" width="282">
+                                        <span class="text-h6 font-weight-bold grey--text  text--darken-1 ">Tech Filters</span>
+                                        <span v-if="!allTechsInitialFadedIn" class="text-subtitle-2 font-weight-medium">please wait full load...</span>
                                         <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
-                                            Highlight Techs used in this website
-                                            <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="89">
-                                                <v-switch v-model="isOnlyThisWebsiteTechs" class="mt-0 ml-5" inset dense hide-spin-buttons hide-details @change="filterTechs()"></v-switch>
+                                            <v-sheet class="text-end elevation-0" width="182">Used in this website</v-sheet>
+                                            <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
+                                                <v-switch :disabled="!allTechsInitialFadedIn" v-model="filters.isShowThisWebsiteTechs" class="mt-0 ml-5" inset dense hide-spin-buttons hide-details
+                                                    @change="toggleFilter('isShowThisWebsiteTechs')"></v-switch>
+                                            </v-sheet>
+                                        </v-sheet>
+                                        <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
+                                            <v-sheet class="text-end elevation-0" width="182">Professional Experience</v-sheet>
+                                            <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
+                                                <v-switch :disabled="!allTechsInitialFadedIn" v-model="filters.isShowProfessionalExperience" class="mt-0 ml-5" inset dense hide-spin-buttons
+                                                    hide-details @change="toggleFilter('isShowProfessionalExperience')"></v-switch>
+                                            </v-sheet>
+                                        </v-sheet>
+                                        <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
+                                            <v-sheet class="text-end elevation-0" width="182">Personal Projects</v-sheet>
+                                            <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
+                                                <v-switch :disabled="!allTechsInitialFadedIn" v-model="filters.isShowPersonalProjects" class="mt-0 ml-5" inset dense hide-spin-buttons hide-details
+                                                    @change="toggleFilter('isShowPersonalProjects')"></v-switch>
                                             </v-sheet>
                                         </v-sheet>
                                     </v-sheet>
@@ -105,8 +122,7 @@
                             <v-menu offset-y content-class="rounded-lg elevation-10 menu" :close-on-content-click="false">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-hover v-slot="{ hover }">
-                                        <v-sheet id="javascript_tech" :class="itemClasses[1] + ' item itemContent1'" style="top: 35%; left: 18%;" :elevation="6" v-bind="attrs"
-                                            v-on="on">
+                                        <v-sheet id="javascript_tech" :class="itemClasses[1] + ' item itemContent1'" style="top: 35%; left: 18%;" :elevation="6" v-bind="attrs" v-on="on">
                                             JavaScript
                                         </v-sheet>
                                     </v-hover>
@@ -125,8 +141,8 @@
 
                             <v-sheet v-for="tech in techs" key="tech.name">
                                 <v-hover v-slot="{ hover }">
-                                    <v-sheet :class="itemClasses[tech.classType] + ' itemContent'+tech.classType + ' item zeroOpacity '" :style="'top: '+tech.top+'; left: '+tech.left+';'" :elevation="3"
-                                        :id="tech.name+'_tech'">
+                                    <v-sheet :class="itemClasses[tech.classType] + ' itemContent'+tech.classType + ' item zeroOpacity '" :style="'top: '+tech.top+'; left: '+tech.left+';'"
+                                        :elevation="3" :id="tech.name+'_tech'">
                                         <!-- :elevation="hover ? itemsHovers[tech.classType] : 3" vuetify hover + css hover CRASH -->
                                         {{tech.name}}
                                     </v-sheet>
@@ -170,6 +186,7 @@
             data() {
                 return {
                     loading: true,
+                    allTechsInitialFadedIn: false,
                     minimumScreenWidth: 900,
                     minimumScreenHeight: 700,
                     socialMedia: [
@@ -193,10 +210,14 @@
                         4: 9,
                         5: 7,
                     },
-                    isOnlyThisWebsiteTechs: false,
+                    filters: {
+                        isShowThisWebsiteTechs: false,
+                        isShowProfessionalExperience: false,
+                        isShowPersonalProjects: false,
+                    },
                     techs: TECHS,
                     allTechsElementsIds: [],
-                    productionMode: true,
+                    productionMode: false,
                 }
             },
             created() {
@@ -219,6 +240,7 @@
                                     setTimeout(() => {
                                         this.applyFadeIn(TECHS.filter(t => t.classType === 5).map(t => t.name + '_tech'));
                                         document.querySelector(':root').style.setProperty('--itemMinimumOpacity', 0.09)
+                                        this.allTechsInitialFadedIn = true;
                                     }, 5400);
                                 }, 4400);
                             }, 3400);
@@ -228,17 +250,30 @@
                     setTimeout(() => {
                         document.querySelector(':root').style.setProperty('--itemMinimumOpacity', 0.09)
                         this.applyFadeIn(this.allTechsElementsIds);
+                        this.allTechsInitialFadedIn = true;
                     }, 300);
                 }
             },
             methods: {
-                filterTechs() {
-                    console.log('filterTechs')
-                    if (this.isOnlyThisWebsiteTechs) {
-                        this.applyFadeOut(TECHS.filter(t => !t.isPresentInThisProject).map(t => t.name + '_tech'))
-                    } else {
-                        this.applyFadeIn(TECHS.map(t => t.name + '_tech'))
-                    }
+                toggleFilter(filterName) {
+                    console.log('toggleFilter', filterName)
+                    this.filters.filterName = !this.filters.filterName
+                    this.applyFilters();
+                },
+                applyFilters() {
+                    console.log('applyFilters')
+                    const techsToFadeIn = TECHS.filter(t =>
+                        (this.filters.isShowThisWebsiteTechs && t.filtersFlags.isThisProject)
+                        ||
+                        (this.filters.isShowProfessionalExperience && t.filtersFlags.pro)
+                        ||
+                        (this.filters.isShowPersonalProjects && t.filtersFlags.personal)
+                        ||
+                        (!this.filters.isShowThisWebsiteTechs && !this.filters.isShowProfessionalExperience && !this.filters.isShowPersonalProjects))
+                        .map(t => t.name + '_tech')
+                    this.applyFadeIn(techsToFadeIn)
+                    const techsToFadeOut = TECHS.filter(t => !techsToFadeIn.includes(t.name + '_tech')).map(t => t.name + '_tech')
+                    this.applyFadeOut(techsToFadeOut)
                 },
                 applyFadeOut(elementsIdsArray) {
                     elementsIdsArray.map(el => {
