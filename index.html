@@ -67,7 +67,7 @@
                             <v-menu offset-y content-class="rounded-lg elevation-10 menu" :close-on-content-click="false">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-hover v-slot="{ hover }">
-                                        <v-sheet id="html_tech" :class="rowClasses[1] + ' row rowContent1'" style="top: 15%; left: 67%;" :elevation="hover ? rowHovers[1] : 3" v-bind="attrs" v-on="on">
+                                        <v-sheet id="html_tech" :class="itemClasses[1] + ' item itemContent1'" style="top: 15%; left: 67%;" :elevation="6" v-bind="attrs" v-on="on">
                                             HTML
                                         </v-sheet>
                                     </v-hover>
@@ -86,7 +86,7 @@
                             <v-menu offset-y content-class="rounded-lg elevation-10 menu" :close-on-content-click="false">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-hover v-slot="{ hover }">
-                                        <v-sheet id="css_tech" :class="rowClasses[1] + ' row rowContent1'" style="top: 55%; left: 77%;" :elevation="hover ? rowHovers[1] : 3" v-bind="attrs" v-on="on">
+                                        <v-sheet id="css_tech" :class="itemClasses[1] + ' item itemContent1'" style="top: 55%; left: 77%;" :elevation="6" v-bind="attrs" v-on="on">
                                             CSS
                                         </v-sheet>
                                     </v-hover>
@@ -105,7 +105,7 @@
                             <v-menu offset-y content-class="rounded-lg elevation-10 menu" :close-on-content-click="false">
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-hover v-slot="{ hover }">
-                                        <v-sheet id="javascript_tech" :class="rowClasses[1] + ' row rowContent1'" style="top: 35%; left: 18%;" :elevation="hover ? rowHovers[1] : 3" v-bind="attrs"
+                                        <v-sheet id="javascript_tech" :class="itemClasses[1] + ' item itemContent1'" style="top: 35%; left: 18%;" :elevation="6" v-bind="attrs"
                                             v-on="on">
                                             JavaScript
                                         </v-sheet>
@@ -125,9 +125,9 @@
 
                             <v-sheet v-for="tech in techs" key="tech.name">
                                 <v-hover v-slot="{ hover }">
-                                    <v-sheet :class="rowClasses[tech.classType] + ' rowContent'+tech.classType + ' row'" :style="'top: '+tech.top+'; left: '+tech.left+';'" :elevation="3"
+                                    <v-sheet :class="itemClasses[tech.classType] + ' itemContent'+tech.classType + ' item zeroOpacity '" :style="'top: '+tech.top+'; left: '+tech.left+';'" :elevation="3"
                                         :id="tech.name+'_tech'">
-                                        <!-- :elevation="hover ? rowTechs[tech.classType] : 3"  -->
+                                        <!-- :elevation="hover ? itemsHovers[tech.classType] : 3" vuetify hover + css hover CRASH -->
                                         {{tech.name}}
                                     </v-sheet>
                                 </v-hover>
@@ -179,14 +179,14 @@
                         { name: 'youtube', url: 'https://www.youtube.com/user/jvwrCIN', icon: 'mdi-youtube', profile: 'YouTube', tooltip: 'My YouTube Channel' },
                         { name: 'linkedin', url: 'https://www.linkedin.com/in/joão-victor-ramos-6570a21b7/', icon: 'mdi-linkedin', profile: 'LinkedIn', tooltip: 'LinkedIn profile' },
                     ],
-                    rowClasses: {
+                    itemClasses: {
                         1: 'text-h3 font-weight-bold text-center ',
                         2: 'text-h4 font-weight-medium text-center ',
                         3: 'text-h5 text-center ',
                         4: 'text-h6 text-center ',
                         5: 'text-subtitle-1 text-center'
                     },
-                    rowHovers: {
+                    itemsHovers: {
                         1: 20,
                         2: 13,
                         3: 11,
@@ -205,14 +205,9 @@
             },
             mounted() {
                 console.log('mounted ' + new Date())
-
                 this.loading = false
                 setTimeout(() => { console.log(document.querySelector('#app').style.display = 'inline') }, 300);
-                setTimeout(() => { this.filterTechs() }, 300);
                 if (this.productionMode) {
-                    setTimeout(() => {
-                        this.applyFadeOut(this.allTechsElementsIds);
-                    }, 500);
                     setTimeout(() => {
                         this.applyFadeIn(['javascript_tech', 'html_tech', 'css_tech']);
                         setTimeout(() => {
@@ -223,15 +218,17 @@
                                     this.applyFadeIn(TECHS.filter(t => t.classType === 4).map(t => t.name + '_tech'));
                                     setTimeout(() => {
                                         this.applyFadeIn(TECHS.filter(t => t.classType === 5).map(t => t.name + '_tech'));
+                                        document.querySelector(':root').style.setProperty('--itemMinimumOpacity', 0.09)
                                     }, 5400);
                                 }, 4400);
                             }, 3400);
                         }, 3000);
-                    }, 2400);
+                    }, 1400);
                 } else {
                     setTimeout(() => {
+                        document.querySelector(':root').style.setProperty('--itemMinimumOpacity', 0.09)
                         this.applyFadeIn(this.allTechsElementsIds);
-                    }, 400);
+                    }, 300);
                 }
             },
             methods: {

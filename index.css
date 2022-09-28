@@ -1,83 +1,81 @@
+:root {
+  --itemMinimumOpacity: 0;
+  --fadeInDuration: 1.5s;
+  --fadeOutDuration: 1.5s;
+}
+
 .logo {
-    transition: transform 0.5s;
-    vertical-align: middle;
+  transition: transform 0.5s;
+  vertical-align: middle;
 }
 
-.row {
+.item {
+  padding: 0px 11px 0px 11px;
+  position: absolute;
+  opacity: var(--itemMinimumOpacity);
 }
 
-.row:hover{
-    -ms-transform: scale(1.35);
-    /* IE 9 */
-    -webkit-transform: scale(1.35);
-    /* Safari 3-8 */
-    transform: scale(1.35);
+.item:hover {
+  -ms-transform: scale(1.35);
+  /* IE 9 */
+  -webkit-transform: scale(1.35);
+  /* Safari 3-8 */
+  transform: scale(1.35);
 }
 
-.rowContent1 {
-    background-color: rgb(248, 169, 23) !important;
-    height: 55px;
-    z-index: 5;
-    border-radius: 5px;
-    padding: 0px 10px 0px 10px;
-    position: absolute;
+.itemContent1 {
+  background-color: rgb(248, 169, 23) !important;
+  height: 55px;
+  z-index: 5;
+  border-radius: 5px;
 }
 
-.rowContent2 {
-    background-color: rgb(147, 228, 147) !important;
-
-    z-index: 4;
-    border-radius: 5px;
-    padding: 0px 10px 0px 10px;
-    position: absolute;
-    cursor: default;
+.itemContent2 {
+  background-color: rgb(147, 228, 147) !important;
+  z-index: 4;
+  border-radius: 5px;
+  padding: 0px 9px 0px 9px;
+  cursor: default;
 }
 
-.rowContent3 {
-    background-color: lightblue !important;
-
-    z-index: 3;
-    border-radius: 5px;
-    padding: 0px 10px 0px 10px;
-    position: absolute;
-    cursor: default;
+.itemContent3 {
+  background-color: lightblue !important;
+  z-index: 3;
+  border-radius: 5px;
+  padding: 0px 6px 0px 6px;
+  cursor: default;
 }
 
-.rowContent4 {
-    background-color: rgb(207, 207, 207) !important;
-
-    z-index: 2;
-    border-radius: 5px;
-    padding: 0px 10px 0px 10px;
-    position: absolute;
-    cursor: default;
+.itemContent4 {
+  background-color: rgb(207, 207, 207) !important;
+  z-index: 2;
+  border-radius: 5px;
+  padding: 0px 6px 0px 6px;
+  cursor: default;
 }
 
-.rowContent5 {
-    background-color: rgb(235, 235, 235) !important;
-
-    z-index: 1;
-    border-radius: 5px;
-    padding: 0px 10px 0px 10px;
-    position: absolute;
-    cursor: default;
+.itemContent5 {
+  background-color: rgb(235, 235, 235) !important;
+  z-index: 1;
+  border-radius: 5px;
+  padding: 0px 5px 0px 5px;
+  cursor: default;
 }
-
 
 .fadeOut {
-    opacity: 0.09;
-    -webkit-transition: opacity 2s ease-out;
-       -moz-transition: opacity 2s ease-out;
-        -ms-transition: opacity 2s ease-out;
-         -o-transition: opacity 2s ease-out;
-            transition: opacity 2s ease-out;
+  opacity: var(--itemMinimumOpacity);
+  -webkit-transition: opacity var(--fadeOutDuration) ease-out;
+  -moz-transition: opacity var(--fadeOutDuration) ease-out;
+  -ms-transition: opacity var(--fadeOutDuration) ease-out;
+  -o-transition: opacity var(--fadeOutDuration) ease-out;
+  transition: opacity var(--fadeOutDuration) ease-out;
 }
 
 .fadeIn {
-    opacity: 1;
-    -webkit-transition: opacity 2s ease-out;
-       -moz-transition: opacity 2s ease-out;
-        -ms-transition: opacity 2s ease-out;
-         -o-transition: opacity 2s ease-out;
-            transition: opacity 2s ease-out;
+  opacity: 1;
+  -webkit-transition: opacity var(--fadeInDuration) ease-out;
+  -moz-transition: opacity var(--fadeInDuration) ease-out;
+  -ms-transition: opacity var(--fadeInDuration) ease-out;
+  -o-transition: opacity var(--fadeInDuration) ease-out;
+  transition: opacity var(--fadeInDuration) ease-out;
 }

@@ -44,7 +44,8 @@ const TECHS = [
   { classType: 4, top: "46%", left: "83%", isPresentInThisProject: false,  name: "Tailwind CSS" },
   { classType: 5, top: "65%", left: "86%", isPresentInThisProject: false,  name: "SASS" },
   { classType: 5, top: "44%", left: "75%", isPresentInThisProject: true,  name: "Flexbox" },
-  { classType: 5, top: "66%", left: "73%", isPresentInThisProject: true,  name: "Animations" },
+  { classType: 5, top: "60%", left: "69%", isPresentInThisProject: true,  name: "Animations" },
+  { classType: 5, top: "66%", left: "76%", isPresentInThisProject: true,  name: "Variables" },
 
   { classType: 4, top: "79%", left: "50%", isPresentInThisProject: false,  name: "GraphQL" },
 
@@ -66,7 +67,7 @@ const TECHS = [
   { classType: 5, top: "82%", left: "3%", isPresentInThisProject: false,  name: "Vim" },
   { classType: 5, top: "71%", left: "9%", isPresentInThisProject: true,  name: "PuTTy" },
   { classType: 4, top: "93%", left: "27%", isPresentInThisProject: false,  name: "Netlify" },
-  { classType: 3, top: "85%", left: "8%", isPresentInThisProject: true,  name: "Digital Ocean" },
+  { classType: 3, top: "85%", left: "9%", isPresentInThisProject: true,  name: "Digital Ocean" },
   { classType: 5, top: "83%", left: "22%", isPresentInThisProject: true,  name: "Certbot SSL" },
   { classType: 5, top: "72%", left: "3%", isPresentInThisProject: false,  name: "PM2" },
 ];
