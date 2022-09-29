@@ -12,6 +12,7 @@ const TECHS = [
   { classType: 4, top: "75%", left: "35%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "Twitter API" },
   { classType: 3, top: "69%", left: "34%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "Telegram Bots API" },
   { classType: 4, top: "56%", left: "35%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "JSON Server" },
+  { classType: 5, top: "65%", left: "24%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "HTTP methods" },
 
   { classType: 3, top: "9%", left: "2%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "Google Sheets" },
   { classType: 2, top: "16%", left: "8%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "Google Apps Script" },
@@ -53,19 +54,20 @@ const TECHS = [
   { classType: 2, top: "83%", left: "63%", filtersFlags: { isThisProject: false, pro: true, personal: true }, name: "SQL" },
   { classType: 5, top: "84%", left: "80%", filtersFlags: { isThisProject: false, pro: true, personal: true }, name: "SQLite" },
   { classType: 5, top: "84%", left: "71%", filtersFlags: { isThisProject: false, pro: true, personal: false }, name: "SQL Server" },
+  { classType: 5, top: "90%", left: "56%", filtersFlags: { isThisProject: false, pro: true, personal: false }, name: "DBeaver" },
 
-  { classType: 3, top: "87%", left: "40%", filtersFlags: { isThisProject: true, pro: false, personal: true }, name: "Git" },
-  { classType: 4, top: "91%", left: "43%", filtersFlags: { isThisProject: true, pro: false, personal: true }, name: "GitHub" },
+  { classType: 3, top: "87%", left: "39%", filtersFlags: { isThisProject: true, pro: true, personal: true }, name: "Git" },
+  { classType: 4, top: "91%", left: "42%", filtersFlags: { isThisProject: true, pro: true, personal: true }, name: "GitHub" },
 
-  { classType: 5, top: "64%", left: "11%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "Socket.io" },
+  { classType: 5, top: "64%", left: "13%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "Socket.io" },
 
   { classType: 5, top: "53%", left: "8%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "NPM" },
-  { classType: 5, top: "77%", left: "21%", filtersFlags: { isThisProject: true, pro: false, personal: true }, name: "NGINX" },
+  { classType: 5, top: "75%", left: "19%", filtersFlags: { isThisProject: true, pro: false, personal: true }, name: "NGINX" },
   { classType: 3, top: "77%", left: "6%", filtersFlags: { isThisProject: true, pro: false, personal: true }, name: "Ubuntu Linux" },
   { classType: 5, top: "82%", left: "3%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "Vim" },
   { classType: 5, top: "71%", left: "9%", filtersFlags: { isThisProject: true, pro: false, personal: true }, name: "PuTTy" },
-  { classType: 4, top: "93%", left: "27%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "Netlify" },
+  { classType: 4, top: "91%", left: "24%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "Netlify" },
   { classType: 3, top: "85%", left: "9%", filtersFlags: { isThisProject: true, pro: false, personal: true }, name: "Digital Ocean" },
-  { classType: 5, top: "83%", left: "22%", filtersFlags: { isThisProject: true, pro: false, personal: true }, name: "Certbot SSL" },
+  { classType: 5, top: "81%", left: "22%", filtersFlags: { isThisProject: true, pro: false, personal: true }, name: "Certbot SSL" },
   { classType: 5, top: "72%", left: "3%", filtersFlags: { isThisProject: false, pro: false, personal: true }, name: "PM2" },
 ];
