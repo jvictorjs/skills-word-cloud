@@ -16,7 +16,12 @@
     <div id="app" style="display: none;">
         <v-app>
             <v-main id="main">
-                <v-container class="px-5 py-0 grey lighten-2 d-flex flex-column align-center justify-space-between elevation-10 " fluid fill-height>
+                <v-container v-if="isLoading" class="align-center justify-center appContainer black" fluid fill-height>
+                    <v-sheet class="transparent" transition="fade-transition" width="182">
+                        <v-progress-linear indeterminate class="white" color="grey darken-3"></v-progress-linear>
+                    </v-sheet>
+                </v-container>
+                <v-container v-else class="px-5 py-0 grey lighten-2 d-flex flex-column align-center justify-space-between elevation-10 " fluid fill-height>
                     <v-sheet class="transparent elevation-0" height="10%">
                         <v-sheet class="pa-3 d-flex flex-wrap align-start justify-space-around rounded-b-lg elevation-3" v-cloak>
                             <v-tooltip v-for="social in socialMedia" :key="social.name" bottom>
@@ -251,7 +256,7 @@
                         this.isLoading = false
                         this.menuOverlayOpening();
                         setTimeout(() => { this.openingAnimations() }, 500)
-                    }, 300);
+                    }, this.isProductionMode ? 2300 : 300);
                 }, 300);
             },
             watch: {
