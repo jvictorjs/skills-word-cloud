@@ -357,11 +357,11 @@
                 applyFilters() {
                     console.log('applyFilters')
                     const techsToFadeIn = TECHS.filter(t =>
-                        (this.filters.isShowThisWebsiteTechs && t.filtersFlags.isThisProject)
+                        (this.filters.isShowThisWebsiteTechs && t.flags.thisProj)
                         ||
-                        (this.filters.isShowProfessionalExperience && t.filtersFlags.pro)
+                        (this.filters.isShowProfessionalExperience && t.flags.pro)
                         ||
-                        (this.filters.isShowPersonalProjects && t.filtersFlags.personal)
+                        (this.filters.isShowPersonalProjects && t.flags.personal)
                         ||
                         (!this.filters.isShowThisWebsiteTechs && !this.filters.isShowProfessionalExperience && !this.filters.isShowPersonalProjects))
                         .map(t => t.name + '_tech')
