@@ -100,76 +100,58 @@
                                     </v-sheet>
                                 </v-menu>
                             </v-sheet>
-                            <v-menu offset-y content-class="rounded-lg elevation-10 menu" :close-on-content-click="false">
-                                <template v-slot:activator="{ on, attrs }">
-                                    <v-hover v-slot="{ hover }">
-                                        <v-sheet id="html_tech" :class="itemClasses[1] + ' item itemContent1'" style="top: 15%; left: 67%;" :elevation="6" v-bind="attrs" v-on="on">
-                                            HTML
-                                        </v-sheet>
-                                    </v-hover>
-                                </template>
-                                <v-sheet class="d-flex flex-column align-center justify-center pa-2 rounded-lg grey--text text--darken-3 elevation-0" width="282">
-                                    More details coming soon...
-                                    <br>
-                                    Useful links:
-                                    <span class="d-flex flex-row justify-center pt-1 text-subtitle-2 grey--text text--darken-1 elevation-0">
-                                        <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">
-                                            https://developer.mozilla.org/en-US/docs/Web/HTML
-                                        </a>
-                                    </span>
-                                </v-sheet>
-                            </v-menu>
-                            <v-menu offset-y content-class="rounded-lg elevation-10 menu" :close-on-content-click="false">
-                                <template v-slot:activator="{ on, attrs }">
-                                    <v-hover v-slot="{ hover }">
-                                        <v-sheet id="css_tech" :class="itemClasses[1] + ' item itemContent1'" style="top: 55%; left: 77%;" :elevation="6" v-bind="attrs" v-on="on">
-                                            CSS
-                                        </v-sheet>
-                                    </v-hover>
-                                </template>
-                                <v-sheet class="d-flex flex-column align-center justify-center pa-2 rounded-lg grey--text text--darken-3 elevation-0" width="282">
-                                    More details coming soon...
-                                    <br>
-                                    Useful links:
-                                    <span class="d-flex flex-row justify-center pt-1 text-subtitle-2 grey--text text--darken-1 elevation-0">
-                                        <a href="https://www.color-hex.com/color-palettes/popular.php" target="_blank">
-                                            https://www.color-hex.com/color-palettes/popular.php
-                                        </a>
-                                    </span>
-                                </v-sheet>
-                            </v-menu>
-                            <v-menu offset-y content-class="rounded-lg elevation-10 menu" :close-on-content-click="false">
-                                <template v-slot:activator="{ on, attrs }">
-                                    <v-hover v-slot="{ hover }">
-                                        <v-sheet id="javascript_tech" :class="itemClasses[1] + ' item itemContent1'" style="top: 35%; left: 18%;" :elevation="6" v-bind="attrs" v-on="on">
-                                            JavaScript
-                                        </v-sheet>
-                                    </v-hover>
-                                </template>
-                                <v-sheet class="d-flex flex-column align-center justify-center pa-2 rounded-lg grey--text text--darken-3 elevation-0">
-                                    More details coming soon...
-                                    <br>
-                                    Useful links:
-                                    <span class="d-flex flex-row justify-center pt-1 text-subtitle-2 grey--text text--darken-1 elevation-0">
-                                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-                                            https://developer.mozilla.org/en-US/docs/Web/JavaScript
-                                        </a>
-                                    </span>
-                                </v-sheet>
-                            </v-menu>
-
                             <v-sheet v-for="tech in techs" key="tech.name">
-                                <v-hover v-slot="{ hover }">
-                                    <v-sheet :class="itemClasses[tech.classType] + ' itemContent'+tech.classType + ' item '" :style="'top: '+tech.top+'; left: '+tech.left+';'" :elevation="3"
-                                        :id="tech.name+'_tech'">
-                                        <!-- :elevation="hover ? itemsHovers[tech.classType] : 3" vuetify hover + css hover CRASH -->
-                                        {{tech.name}}
+                                <v-menu offset-y :content-class="'rounded-lg grey ' + (isAllTechsInitialFadedIn ? 'elevation-10 ' : ' elevation-0 ')" :close-on-content-click="false" open-on-hover>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-hover v-slot="{ hover }">
+                                            <v-sheet :class="itemClasses[tech.classType] + ' itemContent'+tech.classType + ' item '" :style="'top: '+tech.top+'; left: '+tech.left+';'" :elevation="3"
+                                                :id="tech.name+'_tech'" v-bind="attrs" v-on="on">
+                                                <!-- :elevation="hover ? itemsHovers[tech.classType] : 3" vuetify hover + css hover CRASH -->
+                                                {{tech.name}}
+                                            </v-sheet>
+                                        </v-hover>
+                                    </template>
+                                    <v-sheet v-if="isAllTechsInitialFadedIn" class="pa-3" max-width="600">
+                                        <v-sheet v-if="tech.description" class="pb-1 transparent text-wrap" v-html="tech.description"></v-sheet>
+                                        <v-sheet class="mb-0 text-center align-center justify-center">
+                                            <span class="grey--text text--darken-0 font-weight-medium">SKILL LEVEL</span>
+                                            <v-sheet class="d-flex align-center justify-center">
+                                                <v-icon v-for="n in tech.skillLevel" color="yellow darken-1">mdi-star</v-icon>
+                                                <v-icon v-for="n in [1,2,3].splice(tech.skillLevel)" color="grey darken-1">mdi-star</v-icon>
+                                                <!-- {{skillLevels[tech.skillLevel-1]}} -->
+                                                <span v-if="tech.expYears > 0" class="ml-5 text-h6">{{tech.expYears}}+ year{{tech.expYears > 1 ? 's': ''}}</span>
+                                                <span v-else class="ml-5 text-h6"> &lt;1 year </span>
+                                            </v-sheet>
+                                        </v-sheet>
+                                        <v-sheet v-if="tech.projectsAvailable && tech.projectsAvailable.length > 0" class="mt-3 text-center">
+                                            <span class="grey--text text--darken-0 font-weight-medium">PROJECTS</span>
+                                            <v-sheet v-for="project in tech.projectsAvailable" class="d-flex align-center justify-center">
+                                                <v-tooltip bottom>
+                                                    <template v-slot:activator="{ on, attrs }">
+                                                        <span class="ma-1 mx-1 elevation-0" v-bind="attrs" v-on="on">
+                                                            <v-sheet class="mx-1 rounded project">
+                                                                <a :href="project.url" target="_blank">{{project.name}}</a>
+                                                            </v-sheet>
+                                                        </span>
+                                                    </template>
+                                                    project screenshot/gif here
+                                                </v-tooltip>
+                                                <a :href="project.githubRepoURL" target="_blank" style="text-decoration: none">
+                                                    <v-sheet class="ml-1 rounded">
+                                                        <v-icon color="black darken-1">mdi-github</v-icon>
+                                                    </v-sheet>
+                                                </a>
+                                            </v-sheet>
+                                        </v-sheet>
+                                        <v-sheet v-if="showUsefulLinks" v-for="url in tech.relatedContent" key="url.href">
+                                            <span class="grey--text text--darken-0 font-weight-medium">Useful Links</span>
+                                            <a :href="url.href" target="_blank">{{url.a}}</a>
+                                        </v-sheet>
                                     </v-sheet>
-                                </v-hover>
+                                </v-menu>
                             </v-sheet>
                         </v-sheet>
                     </v-sheet>
-
                     <v-sheet class="d-flex flex-column justify-end transparent elevation-0" height="10%" max-width="1200">
                         <v-hover v-slot="{ hover }">
                             <v-sheet class="rounded-t-lg elevation-5">
@@ -195,7 +177,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.6.10/dist/vuetify.js"></script>
     <script type="module">
-        import { TECHS } from "./techs-data.js";
+        import { TECHS, PROJECTS } from "./techs-data.js";
 
         new Vue({
             el: '#app',
@@ -229,6 +211,7 @@
                         4: 9,
                         5: 7,
                     },
+                    skillLevels: ["Beginner", "Intermediate", "Advanced"],
                     filters: {
                         isShowThisWebsiteTechs: false,
                         isShowProfessionalExperience: false,
@@ -239,19 +222,22 @@
                         isAnimationsEnabled: true,
                     },
                     techs: TECHS,
+                    projects: PROJECTS,
                     allTechsElementsIds: [],
                     isProductionMode: true,
                     isMobileLastStatus: true,
+                    showUsefulLinks: false,
                 }
             },
             created() {
                 console.log('created ' + new Date());
-                this.allTechsElementsIds = ['javascript_tech', 'html_tech', 'css_tech'].concat(TECHS.map(t => t.name + '_tech'));
+                this.allTechsElementsIds = TECHS.map(t => t.name + '_tech');
             },
             mounted() {
                 console.log('mounted ' + new Date())
                 setTimeout(() => {
                     document.querySelector('#app').style.display = 'inline'
+                    this.parseTechsData()
                     setTimeout(() => {
                         this.isLoading = false
                         this.menuOverlayOpening();
@@ -278,6 +264,9 @@
                 }
             },
             methods: {
+                parseTechsData() {
+                    this.techs.map(tech => { tech.projectsAvailable = this.projects.filter(project => project.techsNames.includes(tech.name)) })
+                },
                 openingAnimations() {
                     if (!this.isAllTechsInitialFadedIn && !this.isOpeningAnimationsRunning) {
                         if (!this.isMobile) {
@@ -285,7 +274,7 @@
                                 this.isOpeningAnimationsRunning = true;
                                 console.log('running opening animations...')
                                 setTimeout(() => {
-                                    this.applyFadeIn(['javascript_tech', 'html_tech', 'css_tech']);
+                                    this.applyFadeIn(TECHS.filter(t => t.classType === 1).map(t => t.name + '_tech'));
                                     setTimeout(() => {
                                         this.applyFadeIn(TECHS.filter(t => t.classType === 2).map(t => t.name + '_tech'));
                                         setTimeout(() => {

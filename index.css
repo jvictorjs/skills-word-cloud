@@ -22,11 +22,26 @@
   transform: scale(1.35);
 }
 
+
+.project {
+  transition: transform 0.5s;
+  vertical-align: middle;
+}
+
+.project:hover {
+  -ms-transform: scale(1.13);
+  /* IE 9 */
+  -webkit-transform: scale(1.13);
+  /* Safari 3-8 */
+  transform: scale(1.13);
+}
+
 .item {
   border-radius: 5px;
   padding: 0px 11px 0px 11px;
   position: absolute;
   opacity: var(--itemMinimumOpacity);
+  cursor: default;
 }
 
 .item:hover {
@@ -47,28 +62,24 @@
   background-color: var(--itemContent2BGcolor) !important;
   z-index: 4;
   padding: 0px 9px 0px 9px;
-  cursor: default;
 }
 
 .itemContent3 {
   background-color: var(--itemContent3BGcolor) !important;
   z-index: 3;
   padding: 0px 6px 0px 6px;
-  cursor: default;
 }
 
 .itemContent4 {
   background-color: var(--itemContent4BGcolor) !important;
   z-index: 2;
   padding: 0px 6px 0px 6px;
-  cursor: default;
 }
 
 .itemContent5 {
   background-color: var(--itemContent5BGcolor) !important;
   z-index: 1;
   padding: 0px 5px 0px 5px;
-  cursor: default;
 }
 
 .fadeOut {
