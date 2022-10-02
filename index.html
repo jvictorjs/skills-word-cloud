@@ -28,7 +28,7 @@
                                 <template v-slot:activator="{ on, attrs }">
                                     <span class="ma-1 mx-1 elevation-0" v-bind="attrs" v-on="on">
                                         <a :href="social.url" target="_blank" style="text-decoration: none">
-                                            <v-sheet class="mx-2 rounded logo">
+                                            <v-sheet class="mr-2 rounded logo">
                                                 <v-icon large color="black darken-1"> {{social.icon}}</v-icon> {{$vuetify.breakpoint.width > minimumScreenWidth ? social.profile : ''}}
                                             </v-sheet>
                                         </a>
@@ -38,7 +38,7 @@
                             </v-tooltip>
                         </v-sheet>
                     </v-sheet>
-                    <div id="overlay_div" style="outline: rgba(0,0,0,1) solid 10000px; z-index: 10;">{{isProductionMode ? '' : 'isProductionMode: false'}}</div>
+                    <div id="overlay_div" style="outline: rgba(0,0,0,1) solid 10000px; z-index: 10;">{{devSettings.isProductionMode ? '' : 'isProductionMode: false'}}</div>
                     <v-sheet class="pa-5 d-flex flex-column align-center justify-center rounded-lg transparent elevation-0" width="90%" max-width="1400" height="75%" max-height="900">
                         <v-sheet v-if="isMobile" class="d-flex flex-column align-center transparent elevation-0">
                             <v-sheet class="my-3 pa-3 text-center rounded-lg elevation-2 mx-auto" max-width="300">
@@ -50,17 +50,24 @@
                             </v-sheet>
                         </v-sheet>
 
-                        <v-sheet v-else class="elevation-10 rounded-lg " width="100%" height="100%" min-width="720" min-height="280" style="position: relative;">
-                            <v-sheet style="position: relative; z-index: 999;">
+                        <v-sheet v-else class="transparent" width="100%" height="100%" min-width="720" min-height="280" style="position: relative;">
+                            <v-sheet class="ml-1 elevation-0" style="position: absolute; z-index: 999; left: 100%;">
                                 <v-menu offset-x content-class="rounded-lg elevation-10 grey" :close-on-content-click="true" open-on-hover>
                                     <template v-slot:activator="{ on, attrs }">
-                                        <v-btn id="menu_btn" class="mr-1 transparent" v-bind="attrs" v-on="on" icon style="position: absolute; left: 100%;">
+                                        <v-btn id="menu_btn" class="mr-1 transparent" v-bind="attrs" v-on="on" icon style="position: absolute;">
                                             <v-icon class="transparent" size="48">mdi-dots-vertical</v-icon>
                                         </v-btn>
                                     </template>
                                     <v-sheet class="d-flex flex-column align-center justify-center pa-2 rounded-lg menu grey--text elevation-0" width="282">
-                                        <span class="text-h6 font-weight-bold grey--text ">Filters</span>
                                         <span v-if="!isAllTechsInitialFadedIn" class="text-subtitle-2 font-weight-medium">please wait opening animations end...</span>
+                                        <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
+                                            <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="169">
+                                                <v-btn id="flip_btn" class="grey" @click="flip" :disabled="!isAllTechsInitialFadedIn">
+                                                    Show {{ isShowingSkillsSideOfContent ? 'Projects':'Skills' }}
+                                                </v-btn>
+                                            </v-sheet>
+                                        </v-sheet>
+                                        <span class="text-h6 font-weight-bold grey--text ">Filters</span>
                                         <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
                                             <v-sheet class="text-end elevation-0" width="182">Used in this website </v-sheet>
                                             <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
@@ -100,55 +107,72 @@
                                     </v-sheet>
                                 </v-menu>
                             </v-sheet>
-                            <v-sheet v-for="tech in techs" key="tech.name">
-                                <v-menu offset-y :content-class="'rounded-lg grey ' + (isAllTechsInitialFadedIn ? 'elevation-10 ' : ' elevation-0 ')" :close-on-content-click="false" open-on-hover>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-hover v-slot="{ hover }">
-                                            <v-sheet :class="itemClasses[tech.classType] + ' itemContent'+tech.classType + ' item '" :style="'top: '+tech.top+'; left: '+tech.left+';'" :elevation="3"
-                                                :id="tech.name+'_tech'" v-bind="attrs" v-on="on">
-                                                <!-- :elevation="hover ? itemsHovers[tech.classType] : 3" vuetify hover + css hover CRASH -->
-                                                {{tech.name}}
-                                            </v-sheet>
-                                        </v-hover>
-                                    </template>
-                                    <v-sheet v-if="isAllTechsInitialFadedIn" class="pa-3" max-width="600">
-                                        <v-sheet v-if="tech.description" class="pb-1 transparent text-wrap" v-html="tech.description"></v-sheet>
-                                        <v-sheet class="mb-0 text-center align-center justify-center">
-                                            <span class="grey--text text--darken-0 font-weight-medium">SKILL LEVEL</span>
-                                            <v-sheet class="d-flex align-center justify-center">
-                                                <v-icon v-for="n in tech.skillLevel" color="yellow darken-1">mdi-star</v-icon>
-                                                <v-icon v-for="n in [1,2,3].splice(tech.skillLevel)" color="grey darken-1">mdi-star</v-icon>
-                                                <!-- {{skillLevels[tech.skillLevel-1]}} -->
-                                                <span v-if="tech.expYears > 0" class="ml-5 text-h6">{{tech.expYears}}+ year{{tech.expYears > 1 ? 's': ''}}</span>
-                                                <span v-else class="ml-5 text-h6"> &lt;1 year </span>
-                                            </v-sheet>
-                                        </v-sheet>
-                                        <v-sheet v-if="tech.projectsAvailable && tech.projectsAvailable.length > 0" class="mt-3 text-center">
-                                            <span class="grey--text text--darken-0 font-weight-medium">PROJECTS</span>
-                                            <v-sheet v-for="project in tech.projectsAvailable" class="d-flex align-center justify-center">
-                                                <v-tooltip bottom>
-                                                    <template v-slot:activator="{ on, attrs }">
-                                                        <span class="ma-1 mx-1 elevation-0" v-bind="attrs" v-on="on">
-                                                            <v-sheet class="mx-1 rounded project">
-                                                                <a :href="project.url" target="_blank">{{project.name}}</a>
-                                                            </v-sheet>
-                                                        </span>
-                                                    </template>
-                                                    project screenshot/gif here
-                                                </v-tooltip>
-                                                <a :href="project.githubRepoURL" target="_blank" style="text-decoration: none">
-                                                    <v-sheet class="ml-1 rounded">
-                                                        <v-icon color="black darken-1">mdi-github</v-icon>
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn id="flip_btn" class="mt-12 ml-1 transparent" icon style="position: absolute; left: 100%;" @click="flip" v-bind="attrs" v-on="on">
+                                        <v-icon class="transparent" size="42">mdi-rotate-3d-variant</v-icon>
+                                    </v-btn>
+                                </template>
+                                Flip content back/front
+                            </v-tooltip>
+                            <v-sheet class="transparent" width="100%" height="100%" style="perspective: 5000px;">
+                                <v-sheet class="content-container rounded-lg elevation-10" id="content-container">
+                                    <v-sheet class="content-container-front rounded-lg">
+                                        <v-sheet v-for="tech in techs" key="tech.name" class="elevation-0">
+                                            <v-menu offset-y :content-class="'rounded-lg grey '+ 'elevation-10 '" :close-on-content-click="false" open-on-hover>
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-hover v-slot="{ hover }">
+                                                        <v-sheet :class="itemClasses[tech.classType] + ' itemContent'+tech.classType + ' item '" :style="'top: '+tech.top+'; left: '+tech.left+';'"
+                                                            :elevation="3" :id="tech.name+'_tech'" v-bind="attrs" v-on="on">
+                                                            <!-- :elevation="hover ? itemsHovers[tech.classType] : 3" vuetify hover + css hover CRASH -->
+                                                            {{tech.name}}
+                                                        </v-sheet>
+                                                    </v-hover>
+                                                </template>
+                                                <v-sheet v-if="isShowingSkillsSideOfContent && isAllTechsInitialFadedIn" class="pa-3" max-width="600">
+                                                    <v-sheet v-if="tech.description" class="pb-1 transparent text-wrap" v-html="tech.description"></v-sheet>
+                                                    <v-sheet class="mb-0 text-center align-center justify-center">
+                                                        <span class="grey--text text--darken-0 font-weight-medium">SKILL LEVEL</span>
+                                                        <v-sheet class="d-flex align-center justify-center">
+                                                            <v-icon v-for="n in tech.skillLevel" color="yellow darken-1">mdi-star</v-icon>
+                                                            <v-icon v-for="n in [1,2,3].splice(tech.skillLevel)" color="grey darken-1">mdi-star</v-icon>
+                                                            <!-- {{skillLevels[tech.skillLevel-1]}} -->
+                                                            <span v-if="tech.expYears > 0" class="ml-5 text-h6">{{tech.expYears}}+ year{{tech.expYears > 1 ? 's': ''}}</span>
+                                                            <span v-else class="ml-5 text-h6"> &lt;1 year </span>
+                                                        </v-sheet>
                                                     </v-sheet>
-                                                </a>
-                                            </v-sheet>
-                                        </v-sheet>
-                                        <v-sheet v-if="showUsefulLinks" v-for="url in tech.relatedContent" key="url.href">
-                                            <span class="grey--text text--darken-0 font-weight-medium">Useful Links</span>
-                                            <a :href="url.href" target="_blank">{{url.a}}</a>
+                                                    <v-sheet v-if="tech.projectsAvailable && tech.projectsAvailable.length > 0" class="mt-3 text-center">
+                                                        <span class="grey--text text--darken-0 font-weight-medium">PROJECTS</span>
+                                                        <v-sheet v-for="project in tech.projectsAvailable" class="d-flex align-center justify-center">
+                                                            <v-tooltip bottom>
+                                                                <template v-slot:activator="{ on, attrs }">
+                                                                    <span class="ma-1 mx-1 elevation-0" v-bind="attrs" v-on="on">
+                                                                        <v-sheet class="mx-1 rounded project">
+                                                                            <a :href="project.url" target="_blank">{{project.name}}</a>
+                                                                        </v-sheet>
+                                                                    </span>
+                                                                </template>
+                                                                project screenshot/gif here
+                                                            </v-tooltip>
+                                                            <a :href="project.githubRepoURL" target="_blank" style="text-decoration: none">
+                                                                <v-sheet class="ml-1 rounded">
+                                                                    <v-icon color="black darken-1">mdi-github</v-icon>
+                                                                </v-sheet>
+                                                            </a>
+                                                        </v-sheet>
+                                                    </v-sheet>
+                                                    <v-sheet v-if="devSettings.isShowUsefulLinks" v-for="url in tech.relatedContent" key="url.href">
+                                                        <span class="grey--text text--darken-0 font-weight-medium">Useful Links</span>
+                                                        <a :href="url.href" target="_blank">{{url.a}}</a>
+                                                    </v-sheet>
+                                                </v-sheet>
+                                            </v-menu>
                                         </v-sheet>
                                     </v-sheet>
-                                </v-menu>
+                                    <v-sheet class="content-container-back rounded-lg">
+                                        Projects List
+                                    </v-sheet>
+                                </v-sheet>
                             </v-sheet>
                         </v-sheet>
                     </v-sheet>
@@ -177,7 +201,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.6.10/dist/vuetify.js"></script>
     <script type="module">
-        import { TECHS, PROJECTS } from "./techs-data.js";
+        import { TECHS, PROJECTS, SOCIAL_MEDIA } from "./data.js";
 
         new Vue({
             el: '#app',
@@ -185,18 +209,17 @@
 
             data() {
                 return {
+                    devSettings: {
+                        isProductionMode: true,
+                        isShowUsefulLinks: false,
+                    },
+                    isMobileLastStatus: true,
                     isLoading: true,
+                    isShowingSkillsSideOfContent: true,
                     isAllTechsInitialFadedIn: false,
                     isOpeningAnimationsRunning: false,
                     minimumScreenWidth: 900,
                     minimumScreenHeight: 400,
-                    socialMedia: [
-                        { name: 'github', url: 'https://github.com/jvictorjs', icon: 'mdi-github', profile: 'jvictorjs', tooltip: 'GitHub profile' },
-                        { name: 'twitter', url: 'https://twitter.com/jvictor_js', icon: 'mdi-twitter', profile: '@jvictor_js', tooltip: 'Twitter profile' },
-                        { name: 'portfolio', url: 'https://portfolio.jvictor.com.br', icon: 'mdi-briefcase', profile: 'Porfolio', tooltip: 'Portfolio web page' },
-                        { name: 'youtube', url: 'https://www.youtube.com/user/jvwrCIN', icon: 'mdi-youtube', profile: 'YouTube', tooltip: 'My YouTube Channel' },
-                        { name: 'linkedin', url: 'https://www.linkedin.com/in/joão-victor-ramos-6570a21b7/', icon: 'mdi-linkedin', profile: 'LinkedIn', tooltip: 'LinkedIn profile' },
-                    ],
                     itemClasses: {
                         1: 'text-h3 font-weight-bold text-center ',
                         2: 'text-h4 font-weight-medium text-center ',
@@ -223,10 +246,8 @@
                     },
                     techs: TECHS,
                     projects: PROJECTS,
+                    socialMedia: SOCIAL_MEDIA,
                     allTechsElementsIds: [],
-                    isProductionMode: true,
-                    isMobileLastStatus: true,
-                    showUsefulLinks: false,
                 }
             },
             created() {
@@ -242,7 +263,7 @@
                         this.isLoading = false
                         this.menuOverlayOpening();
                         setTimeout(() => { this.openingAnimations() }, 500)
-                    }, this.isProductionMode ? 2300 : 300);
+                    }, this.devSettings.isProductionMode ? 2300 : 300);
                 }, 300);
             },
             watch: {
@@ -264,13 +285,23 @@
                 }
             },
             methods: {
+                flip() {
+                    console.log('flip')
+                    if (document.getElementById('content-container').style.getPropertyValue('transform') === '') {
+                        document.getElementById('content-container').style.setProperty('transform', 'rotateY(180deg)');
+                        this.isShowingSkillsSideOfContent = false
+                    } else {
+                        document.getElementById('content-container').style.removeProperty('transform');
+                        this.isShowingSkillsSideOfContent = true
+                    }
+                },
                 parseTechsData() {
                     this.techs.map(tech => { tech.projectsAvailable = this.projects.filter(project => project.techsNames.includes(tech.name)) })
                 },
                 openingAnimations() {
                     if (!this.isAllTechsInitialFadedIn && !this.isOpeningAnimationsRunning) {
                         if (!this.isMobile) {
-                            if (this.isProductionMode) {
+                            if (this.devSettings.isProductionMode) {
                                 this.isOpeningAnimationsRunning = true;
                                 console.log('running opening animations...')
                                 setTimeout(() => {
@@ -292,7 +323,7 @@
                                                             console.log('opening animations ended')
                                                         }, this.settings.isAnimationsEnabled ? 5000 : 0)
                                                     }, this.settings.isAnimationsEnabled ? 1000 : 0);
-                                                }, this.settings.isAnimationsEnabled ? 3100 : 0);
+                                                }, this.settings.isAnimationsEnabled ? 2700 : 0);
                                             }, this.settings.isAnimationsEnabled ? 2900 : 0);
                                         }, this.settings.isAnimationsEnabled ? 2700 : 0);
                                     }, this.settings.isAnimationsEnabled ? 2000 : 0);

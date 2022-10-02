@@ -1,6 +1,27 @@
-export { TECHS, PROJECTS };
+export { TECHS, PROJECTS, SOCIAL_MEDIA };
 
 const JVICTOR_JS_TEXT_MENTION_HTML = '<a href="https://github.com/jvictorjs" target="_blank"><strong class="blue--text">@jvictorjs</strong></a>';
+
+const SOCIAL_MEDIA = [
+  { name: "github", url: "https://github.com/jvictorjs", icon: "mdi-github", profile: "jvictorjs", tooltip: "GitHub profile" },
+  { name: "twitter", url: "https://twitter.com/jvictor_js", icon: "mdi-twitter", profile: "@jvictor_js", tooltip: "Twitter profile" },
+  { name: "portfolio", url: "https://portfolio.jvictor.com.br", icon: "mdi-briefcase", profile: "Porfolio", tooltip: "Portfolio web page" },
+  { name: "youtube", url: "https://www.youtube.com/user/jvwrCIN", icon: "mdi-youtube", profile: "YouTube", tooltip: "My YouTube Channel" },
+  {
+    name: "linkedin",
+    url: "https://www.linkedin.com/in/joão-victor-ramos-6570a21b7/",
+    icon: "mdi-linkedin",
+    profile: "LinkedIn",
+    tooltip: "LinkedIn profile",
+  },
+  {
+    name: "learn",
+    url: "https://courses.jvictor.com.br",
+    icon: "mdi-school",
+    profile: "Course",
+    tooltip: "Learn JavaScript with my video lessons",
+  },
+];
 
 const PROJECTS = [
   {
@@ -100,7 +121,7 @@ const TECHS = [
   {
     classType: 2,
     expYears: 5,
-    skillLevel: 5,
+    skillLevel: 3,
     top: "16%",
     left: "8%",
     flags: { thisProj: false, pro: false, personal: true },

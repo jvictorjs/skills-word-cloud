@@ -99,3 +99,26 @@
   -o-transition: opacity var(--fadeInDuration) ease-out;
   transition: opacity var(--fadeInDuration) ease-out;
 }
+
+
+
+
+.content-container{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 1.3s;
+  transform-style: preserve-3d;
+}
+
+.content-container-front, .content-container-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+.content-container-back {
+  transform: rotateY(180deg);
+}

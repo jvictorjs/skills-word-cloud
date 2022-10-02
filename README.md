@@ -26,6 +26,7 @@ https://skills.jvictor.com.br
 - ✅ Added isMobile Vue computed prop to clean code [v0.5.1]
 - ✅ Opening loading progress bar while CDN files are downloaded [v0.5.2]
 - ✅ Skill tooltip with details: years of exp., skill level ⭐⭐⭐, projects. [v0.6.0]
+- ✅ Add flip functionality to main content (front: skills, back: projects) [v0.7.0]
 - Create skill vue component 
 - Projects list to filter showing skills according to project selected
 - New filter: skills relevance slider (hide/show smaller ones)
