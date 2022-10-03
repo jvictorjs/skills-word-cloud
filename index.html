@@ -59,14 +59,7 @@
                                         </v-btn>
                                     </template>
                                     <v-sheet class="d-flex flex-column align-center justify-center pa-2 rounded-lg menu grey--text elevation-0" width="282">
-                                        <span v-if="!isAllTechsInitialFadedIn" class="text-subtitle-2 font-weight-medium">please wait opening animations end...</span>
-                                        <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
-                                            <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="169">
-                                                <v-btn id="flip_btn" class="grey" @click="flip" :disabled="!isAllTechsInitialFadedIn">
-                                                    Show {{ isShowingSkillsSideOfContent ? 'Projects':'Skills' }}
-                                                </v-btn>
-                                            </v-sheet>
-                                        </v-sheet>
+                                        <span v-if="!isAllTechsInitialFadedIn" class="text-subtitle-2 font-weight-medium">please wait opening animations...</span>
                                         <span class="text-h6 font-weight-bold grey--text ">Filters</span>
                                         <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
                                             <v-sheet class="text-end elevation-0" width="182">Used in this website </v-sheet>
@@ -109,17 +102,31 @@
                             </v-sheet>
                             <v-tooltip bottom>
                                 <template v-slot:activator="{ on, attrs }">
-                                    <v-btn id="flip_btn" class="mt-12 ml-1 transparent" icon style="position: absolute; left: 100%;" @click="flip" v-bind="attrs" v-on="on">
+                                    <v-btn id="rotate_btn" class="ml-1 transparent" icon style="position: absolute; left: 100%; top: 50px;" @click="rotate" v-bind="attrs" v-on="on"
+                                        :disabled="!isAllTechsInitialFadedIn">
                                         <v-icon class="transparent" size="42">mdi-rotate-3d-variant</v-icon>
                                     </v-btn>
                                 </template>
-                                Flip content back/front
+                                <v-sheet class="transparent text-center white--text">
+                                    Rotate
+                                </v-sheet>
+                            </v-tooltip>
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-progress-linear v-if="!isAllTechsInitialFadedIn" v-bind="attrs" v-on="on" indeterminate color="grey"
+                                        style="position: absolute; left: 100%; top: 105px; width: 28px;" class="ml-2">
+                                    </v-progress-linear>
+                                </template>
+                                <v-sheet class="transparent text-center white--text">
+                                    Opening animations running...
+                                </v-sheet>
                             </v-tooltip>
                             <v-sheet class="transparent" width="100%" height="100%" style="perspective: 5000px;">
                                 <v-sheet class="content-container rounded-lg elevation-10" id="content-container">
                                     <v-sheet class="content-container-front rounded-lg">
                                         <v-sheet v-for="tech in techs" key="tech.name" class="elevation-0">
-                                            <v-menu offset-y :content-class="'rounded-lg grey '+ 'elevation-10 '" :close-on-content-click="false" open-on-hover>
+                                            <v-menu offset-y :content-class="'rounded-lg grey '+ (isShowingSkillsSideOfContent && isAllTechsInitialFadedIn ? ' elevation-10 ' :' elevation-0 ') "
+                                                :close-on-content-click="false" open-on-hover>
                                                 <template v-slot:activator="{ on, attrs }">
                                                     <v-hover v-slot="{ hover }">
                                                         <v-sheet :class="itemClasses[tech.classType] + ' itemContent'+tech.classType + ' item '" :style="'top: '+tech.top+'; left: '+tech.left+';'"
@@ -285,15 +292,16 @@
                 }
             },
             methods: {
-                flip() {
-                    console.log('flip')
-                    if (document.getElementById('content-container').style.getPropertyValue('transform') === '') {
-                        document.getElementById('content-container').style.setProperty('transform', 'rotateY(180deg)');
-                        this.isShowingSkillsSideOfContent = false
-                    } else {
-                        document.getElementById('content-container').style.removeProperty('transform');
-                        this.isShowingSkillsSideOfContent = true
+                rotate() {
+                    console.log('rotate')
+                    const getCurrentTransformDegreesValue = () => {
+                        let currentValue = document.getElementById('content-container').style.getPropertyValue('transform');
+                        if (currentValue) {
+                            return Number(currentValue.substring(currentValue.indexOf('(') + 1, currentValue.indexOf('deg')))
+                        } else return 0;
                     }
+                    const rotateY180deg = () => { document.getElementById('content-container').style.setProperty('transform', 'rotateY(' + (getCurrentTransformDegreesValue() + 180) + 'deg)') }
+                    rotateY180deg();
                 },
                 parseTechsData() {
                     this.techs.map(tech => { tech.projectsAvailable = this.projects.filter(project => project.techsNames.includes(tech.name)) })
