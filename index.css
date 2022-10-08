@@ -122,3 +122,21 @@
 .content-container-back {
   transform: rotateY(180deg);
 }
+
+
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(55, 55, 55, 0.4) orange;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(55, 55, 55, 0.4);
+  border-radius: 3px;
+}

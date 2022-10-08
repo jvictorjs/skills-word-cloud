@@ -51,7 +51,7 @@
                         </v-sheet>
 
                         <v-sheet v-else class="transparent" width="100%" height="100%" min-width="720" min-height="280" style="position: relative;">
-                            <v-sheet class="ml-1 elevation-0" style="position: absolute; z-index: 999; left: 100%;">
+                            <v-sheet class="ml-1 elevation-0" style="position: absolute; z-index: 99; left: 100%;">
                                 <v-menu offset-x content-class="rounded-lg elevation-10 grey" :close-on-content-click="true" open-on-hover>
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-btn id="menu_btn" class="mr-1 transparent" v-bind="attrs" v-on="on" icon style="position: absolute;">
@@ -102,13 +102,13 @@
                             </v-sheet>
                             <v-tooltip bottom>
                                 <template v-slot:activator="{ on, attrs }">
-                                    <v-btn id="rotate_btn" class="ml-1 transparent" icon style="position: absolute; left: 100%; top: 50px;" @click="rotate" v-bind="attrs" v-on="on"
+                                    <v-btn id="flip_btn" class="ml-1 transparent" icon style="position: absolute; left: 100%; top: 50px;" @click="flip" v-bind="attrs" v-on="on"
                                         :disabled="!isAllTechsInitialFadedIn">
                                         <v-icon class="transparent" size="42">mdi-rotate-3d-variant</v-icon>
                                     </v-btn>
                                 </template>
                                 <v-sheet class="transparent text-center white--text">
-                                    Rotate
+                                    flip
                                 </v-sheet>
                             </v-tooltip>
                             <v-tooltip bottom>
@@ -123,10 +123,10 @@
                             </v-tooltip>
                             <v-sheet class="transparent" width="100%" height="100%" style="perspective: 5000px;">
                                 <v-sheet class="content-container rounded-lg elevation-10" id="content-container">
-                                    <v-sheet class="content-container-front rounded-lg">
+                                    <v-sheet class="content-container-front rounded-lg" id="content-container-front">
                                         <v-sheet v-for="tech in techs" key="tech.name" class="elevation-0">
-                                            <v-menu offset-y :content-class="'rounded-lg grey '+ (isShowingSkillsSideOfContent && isAllTechsInitialFadedIn ? ' elevation-10 ' :' elevation-0 ') "
-                                                :close-on-content-click="false" open-on-hover>
+                                            <v-menu offset-y :content-class="'rounded-lg grey '+ (isAllTechsInitialFadedIn ? ' elevation-10 ' :' elevation-0 ') " :close-on-content-click="false"
+                                                open-on-hover>
                                                 <template v-slot:activator="{ on, attrs }">
                                                     <v-hover v-slot="{ hover }">
                                                         <v-sheet :class="itemClasses[tech.classType] + ' itemContent'+tech.classType + ' item '" :style="'top: '+tech.top+'; left: '+tech.left+';'"
@@ -136,7 +136,7 @@
                                                         </v-sheet>
                                                     </v-hover>
                                                 </template>
-                                                <v-sheet v-if="isShowingSkillsSideOfContent && isAllTechsInitialFadedIn" class="pa-3" max-width="600">
+                                                <v-sheet v-if="isAllTechsInitialFadedIn" class="pa-3" max-width="600">
                                                     <v-sheet v-if="tech.description" class="pb-1 transparent text-wrap" v-html="tech.description"></v-sheet>
                                                     <v-sheet class="mb-0 text-center align-center justify-center">
                                                         <span class="grey--text text--darken-0 font-weight-medium">SKILL LEVEL</span>
@@ -176,8 +176,38 @@
                                             </v-menu>
                                         </v-sheet>
                                     </v-sheet>
-                                    <v-sheet class="content-container-back rounded-lg">
-                                        Projects List
+                                    <v-sheet class="content-container-back rounded-lg pa-3 " style="z-index: 9999;">
+                                        <v-sheet class=" text-center text-h5 font-weight-bold" width="100%">Projects</v-sheet>
+                                        <v-sheet class="d-flex flex-wrap justify-space-around overflow-y-auto" height="93%" style="z-index: 999999;">
+                                            <v-sheet v-for="project in projects" key="tech.name" class="elevation-5 ma-3 rounded-lg pa-1 grey lighten-2" width="400" height="400">
+                                                <v-sheet class="text-center text-h6 transparent grey--text text--darken-3"> {{project.name}} </v-sheet>
+                                                <v-sheet class="ma-1 d-flex justify-center rounded-lg transparent px-3" height="220">
+                                                    <img class="rounded" :src="'./img/'+project.imgFileName" alt="project screenshot" height="95%">
+                                                </v-sheet>
+                                                <v-sheet class="mt-0 mb-0 px-2 text-center transparent" width="100%">
+                                                    {{project.description}}
+                                                </v-sheet>
+                                                <v-sheet class="my-0 pa-0 transparent d-flex flex-column justify-center align-center" height="90">
+                                                    <v-sheet class="my-0 pa-0 d-flex align-center justify-center transparent">
+                                                        <span class="mb-1 mx-1 elevation-0">
+                                                            <v-sheet class="mx-1 rounded transparent">
+                                                                <a :href="project.url" target="_blank">{{project.urlLabel}}</a>
+                                                            </v-sheet>
+                                                        </span>
+                                                        <a :href="project.githubRepoURL" target="_blank" style="text-decoration: none">
+                                                            <v-sheet class="ml-1 rounded transparent">
+                                                                <v-icon color="black darken-1">mdi-github</v-icon>
+                                                            </v-sheet>
+                                                        </a>
+                                                    </v-sheet>
+                                                    <v-sheet class="d-flex flex-wrap justify-center text-subtitle-2 transparent">
+                                                        <v-sheet v-for="tech in project.techsNames" key="tech" class="elevation-1 mx-1 mb-1 rounded-lg px-1">
+                                                            {{tech}}
+                                                        </v-sheet>
+                                                    </v-sheet>
+                                                </v-sheet>
+                                            </v-sheet>
+                                        </v-sheet>
                                     </v-sheet>
                                 </v-sheet>
                             </v-sheet>
@@ -222,7 +252,6 @@
                     },
                     isMobileLastStatus: true,
                     isLoading: true,
-                    isShowingSkillsSideOfContent: true,
                     isAllTechsInitialFadedIn: false,
                     isOpeningAnimationsRunning: false,
                     minimumScreenWidth: 900,
@@ -269,7 +298,7 @@
                     setTimeout(() => {
                         this.isLoading = false
                         this.menuOverlayOpening();
-                        setTimeout(() => { this.openingAnimations() }, 500)
+                        // setTimeout(() => { this.openingAnimations(), this.flip(); }, 500) // to flip (projects) as soon as page load
                     }, this.devSettings.isProductionMode ? 2300 : 300);
                 }, 300);
             },
@@ -292,16 +321,15 @@
                 }
             },
             methods: {
-                rotate() {
-                    console.log('rotate')
-                    const getCurrentTransformDegreesValue = () => {
-                        let currentValue = document.getElementById('content-container').style.getPropertyValue('transform');
-                        if (currentValue) {
-                            return Number(currentValue.substring(currentValue.indexOf('(') + 1, currentValue.indexOf('deg')))
-                        } else return 0;
+                flip() {
+                    console.log('flip')
+                    if (document.getElementById('content-container').style.getPropertyValue('transform') === '') {
+                        document.getElementById('content-container').style.setProperty('transform', 'rotateY(180deg)');
+                        setTimeout(() => { document.getElementById('content-container-front').classList.add('d-none') }, 800)
+                    } else {
+                        document.getElementById('content-container').style.removeProperty('transform');
+                        setTimeout(() => { document.getElementById('content-container-front').classList.remove('d-none') }, 13)
                     }
-                    const rotateY180deg = () => { document.getElementById('content-container').style.setProperty('transform', 'rotateY(' + (getCurrentTransformDegreesValue() + 180) + 'deg)') }
-                    rotateY180deg();
                 },
                 parseTechsData() {
                     this.techs.map(tech => { tech.projectsAvailable = this.projects.filter(project => project.techsNames.includes(tech.name)) })
