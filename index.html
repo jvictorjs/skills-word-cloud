@@ -52,37 +52,21 @@
 
                         <v-sheet v-else class="transparent" width="100%" height="100%" min-width="720" min-height="280" style="position: relative;">
                             <v-sheet class="ml-1 elevation-0" style="position: absolute; z-index: 99; left: 100%;">
-                                <v-menu offset-x content-class="rounded-lg elevation-10 grey" :close-on-content-click="true" open-on-hover>
+                                <v-menu offset-x content-class="rounded-lg elevation-10 grey" :close-on-content-click="false">
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-btn id="menu_btn" class="mr-1 transparent" v-bind="attrs" v-on="on" icon style="position: absolute;">
                                             <v-icon class="transparent" size="48">mdi-dots-vertical</v-icon>
                                         </v-btn>
                                     </template>
                                     <v-sheet class="d-flex flex-column align-center justify-center pa-2 rounded-lg menu grey--text elevation-0" width="282">
+                                        <span class="mt-2 text-h6 font-weight-bold grey--text ">Project Filter</span>
                                         <span v-if="!isAllTechsInitialFadedIn" class="text-subtitle-2 font-weight-medium">please wait opening animations...</span>
-                                        <span class="text-h6 font-weight-bold grey--text ">Filters</span>
-                                        <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
-                                            <v-sheet class="text-end elevation-0" width="182">Used in this website </v-sheet>
-                                            <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
-                                                <v-switch :disabled="!isAllTechsInitialFadedIn" v-model="filters.isShowThisWebsiteTechs" class="mt-0 ml-5" inset dense hide-spin-buttons hide-details
-                                                    @change="toggleFilter('isShowThisWebsiteTechs')"></v-switch>
-                                            </v-sheet>
+                                        <v-sheet class="my-3" width="220">
+                                            <v-select v-model="selectedProject" :disabled="!isAllTechsInitialFadedIn" :items="projects" item-text="name" item-value="name" label="Select a project"
+                                                single-line outlined @change="applyFilters()" hide-details append-outer-icon="mdi-close-circle" @click:append-outer="clearFilters()">
+                                            </v-select>
                                         </v-sheet>
-                                        <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
-                                            <v-sheet class="text-end elevation-0" width="182">Professional experience </v-sheet>
-                                            <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
-                                                <v-switch :disabled="!isAllTechsInitialFadedIn" v-model="filters.isShowProfessionalExperience" class="mt-0 ml-5" inset dense hide-spin-buttons
-                                                    hide-details @change="toggleFilter('isShowProfessionalExperience')"></v-switch>
-                                            </v-sheet>
-                                        </v-sheet>
-                                        <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
-                                            <v-sheet class="text-end elevation-0" width="182">Personal projects </v-sheet>
-                                            <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
-                                                <v-switch :disabled="!isAllTechsInitialFadedIn" v-model="filters.isShowPersonalProjects" class="mt-0 ml-5" inset dense hide-spin-buttons hide-details
-                                                    @change="toggleFilter('isShowPersonalProjects')"></v-switch>
-                                            </v-sheet>
-                                        </v-sheet>
-                                        <span class="mt-5 text-h6 font-weight-bold grey--text  ">Settings</span>
+                                        <span class="mt-4 text-h6 font-weight-bold grey--text  ">Settings</span>
                                         <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
                                             <v-sheet class="text-end elevation-0" width="182">Grayscale palette </v-sheet>
                                             <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
@@ -92,7 +76,7 @@
                                         </v-sheet>
                                         <v-sheet class="d-flex flex-row align-center justify-space-around text-center pa-2 elevation-0 grey--text text--darken-3 font-weight-medium">
                                             <v-sheet class="text-end elevation-0" width="182">Animations</v-sheet>
-                                            <v-sheet class=" ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
+                                            <v-sheet class="mb-2  ml-2  d-flex flex-column align-center justify-center elevation-0 " width="69">
                                                 <v-switch v-model="settings.isAnimationsEnabled" class="mt-0 ml-5" inset dense hide-spin-buttons hide-details
                                                     @change="toggleSetting('isAnimationsEnabled')"></v-switch>
                                             </v-sheet>
@@ -179,8 +163,8 @@
                                     <v-sheet class="content-container-back rounded-lg pa-3 " style="z-index: 9999;">
                                         <v-sheet class=" text-center text-h5 font-weight-bold" width="100%">Projects</v-sheet>
                                         <v-sheet class="d-flex flex-wrap justify-space-around overflow-y-auto" height="93%" style="z-index: 999999;">
-                                            <v-sheet v-for="project in projects" key="tech.name" class="elevation-5 ma-3 rounded-lg pa-1 grey lighten-2" width="400" height="400">
-                                                <v-sheet class="text-center text-h6 transparent grey--text text--darken-3"> {{project.name}} </v-sheet>
+                                            <v-sheet v-for="project in projects" key="tech.name" class="elevation-2 mx-3 my-6 rounded-lg pa-1 grey lighten-2" width="400" height="400">
+                                                <v-sheet class="text-center text-h6 transparent grey--text text--darken-3"> {{project.nameFull}} </v-sheet>
                                                 <v-sheet class="ma-1 d-flex justify-center rounded-lg transparent px-3" height="220">
                                                     <img class="rounded" :src="'./img/'+project.imgFileName" alt="project screenshot" height="95%">
                                                 </v-sheet>
@@ -201,7 +185,7 @@
                                                         </a>
                                                     </v-sheet>
                                                     <v-sheet class="d-flex flex-wrap justify-center text-subtitle-2 transparent">
-                                                        <v-sheet v-for="tech in project.techsNames" key="tech" class="elevation-1 mx-1 mb-1 rounded-lg px-1">
+                                                        <v-sheet v-for="tech in project.techsNamesToShowTag" key="tech" class="elevation-1 mx-1 mb-1 rounded-lg px-1">
                                                             {{tech}}
                                                         </v-sheet>
                                                     </v-sheet>
@@ -271,11 +255,7 @@
                         5: 7,
                     },
                     skillLevels: ["Beginner", "Intermediate", "Advanced"],
-                    filters: {
-                        isShowThisWebsiteTechs: false,
-                        isShowProfessionalExperience: false,
-                        isShowPersonalProjects: false,
-                    },
+                    selectedProject: {},
                     settings: {
                         isGrayscalePalette: false,
                         isAnimationsEnabled: true,
@@ -332,7 +312,7 @@
                     }
                 },
                 parseTechsData() {
-                    this.techs.map(tech => { tech.projectsAvailable = this.projects.filter(project => project.techsNames.includes(tech.name)) })
+                    this.techs.map(tech => { tech.projectsAvailable = this.projects.filter(project => project.allTechs.includes(tech.name)) })
                 },
                 openingAnimations() {
                     if (!this.isAllTechsInitialFadedIn && !this.isOpeningAnimationsRunning) {
@@ -380,11 +360,6 @@
                     this.settings.settingName = !this.settings.settingName
                     this.applySettings()
                 },
-                toggleFilter(filterName) {
-                    console.log('toggleFilter', filterName)
-                    this.filters.filterName = !this.filters.filterName
-                    this.applyFilters();
-                },
                 applySettings() {
                     if (this.settings.isGrayscalePalette) {
                         this.setCSSvariableValue('itemContent1BGcolor', 'rgb(165,165,165)')
@@ -410,17 +385,19 @@
                 setCSSvariableValue(propName, propVal) { // custom propertie = CSS variables
                     document.querySelector(':root').style.setProperty('--' + propName, propVal)
                 },
+                clearFilters() {
+                    console.log('clearFilters')
+                    if (this.isAllTechsInitialFadedIn) {
+                        this.applyFadeIn(this.allTechsElementsIds);
+                        this.selectedProject = {};
+                    }
+                },
                 applyFilters() {
                     console.log('applyFilters')
+                    const selectedProjectToGetTechs = this.projects.filter(p => p.name === this.selectedProject)[0]
                     const techsToFadeIn = TECHS.filter(t =>
-                        (this.filters.isShowThisWebsiteTechs && t.flags.thisProj)
-                        ||
-                        (this.filters.isShowProfessionalExperience && t.flags.pro)
-                        ||
-                        (this.filters.isShowPersonalProjects && t.flags.personal)
-                        ||
-                        (!this.filters.isShowThisWebsiteTechs && !this.filters.isShowProfessionalExperience && !this.filters.isShowPersonalProjects))
-                        .map(t => t.name + '_tech')
+                        selectedProjectToGetTechs.allTechs.includes(t.name)
+                    ).map(t => t.name + '_tech')
                     this.applyFadeIn(techsToFadeIn)
                     const techsToFadeOut = TECHS.filter(t => !techsToFadeIn.includes(t.name + '_tech')).map(t => t.name + '_tech')
                     this.applyFadeOut(techsToFadeOut)
