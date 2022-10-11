@@ -29,5 +29,6 @@ https://skills.jvictor.com.br
 - ✅ Add flip functionality to main content (front: skills, back: projects) [v0.7.0]
 - ✅ Add Projects list with basic details to the back of main content [v0.8.0]
 - ✅ Skills -> filter by projects (show skills according to project selected) [v0.8.1]
+- ✅ Projects -> add youtube demo video url + language [v0.8.2]
 - Create skill vue component 
 - New filter: skills relevance slider (hide/show smaller ones)

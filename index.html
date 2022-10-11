@@ -39,7 +39,7 @@
                         </v-sheet>
                     </v-sheet>
                     <div id="overlay_div" style="outline: rgba(0,0,0,1) solid 10000px; z-index: 10;">{{devSettings.isProductionMode ? '' : 'isProductionMode: false'}}</div>
-                    <v-sheet class="pa-5 d-flex flex-column align-center justify-center rounded-lg transparent elevation-0" width="90%" max-width="1400" height="75%" max-height="900">
+                    <v-sheet class="pa-5 d-flex flex-column align-center justify-center rounded-lg transparent elevation-0" width="90%" max-width="1440" height="75%" max-height="1200">
                         <v-sheet v-if="isMobile" class="d-flex flex-column align-center transparent elevation-0">
                             <v-sheet class="my-3 pa-3 text-center rounded-lg elevation-2 mx-auto" max-width="300">
                                 PLEASE ROTATE YOUR DEVICE
@@ -145,7 +145,7 @@
                                                                 </template>
                                                                 project screenshot/gif here
                                                             </v-tooltip>
-                                                            <a :href="project.githubRepoURL" target="_blank" style="text-decoration: none">
+                                                            <a v-if="project.githubRepoURL" :href="project.githubRepoURL" target="_blank" style="text-decoration: none">
                                                                 <v-sheet class="ml-1 rounded">
                                                                     <v-icon color="black darken-1">mdi-github</v-icon>
                                                                 </v-sheet>
@@ -161,31 +161,58 @@
                                         </v-sheet>
                                     </v-sheet>
                                     <v-sheet class="content-container-back rounded-lg pa-3 " style="z-index: 9999;">
-                                        <v-sheet class=" text-center text-h5 font-weight-bold" width="100%">Projects</v-sheet>
+                                        <v-sheet class="mb-3 text-center text-h5 font-weight-bold" width="100%">Projects</v-sheet>
                                         <v-sheet class="d-flex flex-wrap justify-space-around overflow-y-auto" height="93%" style="z-index: 999999;">
-                                            <v-sheet v-for="project in projects" key="tech.name" class="elevation-2 mx-3 my-6 rounded-lg pa-1 grey lighten-2" width="400" height="400">
-                                                <v-sheet class="text-center text-h6 transparent grey--text text--darken-3"> {{project.nameFull}} </v-sheet>
+                                            <v-sheet v-for="project in projects" key="tech.name" class="elevation-2 mx-3 mt-4 mb-8 rounded-lg pa-1 grey lighten-2" width="390" height="450">
+                                                <v-sheet class="my-1 text-center text-h6 transparent grey--text text--darken-3"> {{project.nameFull}}</v-sheet>
                                                 <v-sheet class="ma-1 d-flex justify-center rounded-lg transparent px-3" height="220">
                                                     <img class="rounded" :src="'./img/'+project.imgFileName" alt="project screenshot" height="95%">
                                                 </v-sheet>
-                                                <v-sheet class="mt-0 mb-0 px-2 text-center transparent" width="100%">
+                                                <v-sheet class="mt-0 mb-0 px-2 d-flex justify-center align-center text-center transparent elevation-0" width="100%" height="65">
                                                     {{project.description}}
                                                 </v-sheet>
-                                                <v-sheet class="my-0 pa-0 transparent d-flex flex-column justify-center align-center" height="90">
-                                                    <v-sheet class="my-0 pa-0 d-flex align-center justify-center transparent">
-                                                        <span class="mb-1 mx-1 elevation-0">
-                                                            <v-sheet class="mx-1 rounded transparent">
-                                                                <a :href="project.url" target="_blank">{{project.urlLabel}}</a>
-                                                            </v-sheet>
-                                                        </span>
-                                                        <a :href="project.githubRepoURL" target="_blank" style="text-decoration: none">
-                                                            <v-sheet class="ml-1 rounded transparent">
-                                                                <v-icon color="black darken-1">mdi-github</v-icon>
-                                                            </v-sheet>
-                                                        </a>
-                                                    </v-sheet>
+                                                <v-sheet class="my-1 pa-0 d-flex align-center justify-center transparent elevation-0" height="36">
+                                                    <v-tooltip v-if="project.language && project.urlLabel" bottom>
+                                                        <template v-slot:activator="{ on, attrs }">
+                                                            <span class="mb-1 mx-1 elevation-0" v-bind="attrs" v-on="on">
+                                                                <v-sheet class="mx-1 rounded transparent">
+                                                                    <a :href="project.url" target="_blank">{{project.urlLabel}}</a>
+                                                                    <sup>{{project.languageSymbol}}</sup>
+                                                                </v-sheet>
+                                                            </span>
+                                                        </template>
+                                                        <v-sheet class="transparent white--text">
+                                                            Language: <span v-html="project.language"></span>
+                                                        </v-sheet>
+                                                    </v-tooltip>
+                                                    <v-tooltip v-if="project.githubRepoURL" bottom>
+                                                        <template v-slot:activator="{ on, attrs }">
+                                                            <span class="ma-1 mx-1 elevation-0" v-bind="attrs" v-on="on">
+                                                                <a :href="project.githubRepoURL" target="_blank" style="text-decoration: none">
+                                                                    <v-sheet class="ml-1 rounded transparent">
+                                                                        <v-icon color="black darken-1" large>mdi-github</v-icon>
+                                                                    </v-sheet>
+                                                                </a>
+                                                            </span>
+                                                        </template>
+                                                        GitHub repository
+                                                    </v-tooltip>
+                                                    <v-tooltip v-if="project.youtubeDemoURL" bottom>
+                                                        <template v-slot:activator="{ on, attrs }">
+                                                            <span class="ma-1 mx-1 elevation-0" v-bind="attrs" v-on="on">
+                                                                <a :href="project.youtubeDemoURL" target="_blank" style="text-decoration: none">
+                                                                    <v-sheet class="ml-1 rounded transparent">
+                                                                        <v-icon color="red darken-1" large>mdi-youtube</v-icon>
+                                                                    </v-sheet>
+                                                                </a>
+                                                            </span>
+                                                        </template>
+                                                        YouTube demo
+                                                    </v-tooltip>
+                                                </v-sheet>
+                                                <v-sheet class="my-0 pa-0 transparent d-flex flex-column justify-center align-center elevation-0" height="70">
                                                     <v-sheet class="d-flex flex-wrap justify-center text-subtitle-2 transparent">
-                                                        <v-sheet v-for="tech in project.techsNamesToShowTag" key="tech" class="elevation-1 mx-1 mb-1 rounded-lg px-1">
+                                                        <v-sheet v-for="tech in project.techsNamesToShowTag" key="tech" class="elevation-1 mx-1 mb-1 rounded-lg px-1 grey darken-2 white--text text-subtitle-2 font-weight-light">
                                                             {{tech}}
                                                         </v-sheet>
                                                     </v-sheet>
@@ -231,7 +258,7 @@
             data() {
                 return {
                     devSettings: {
-                        isProductionMode: true,
+                        isProductionMode: false,
                         isShowUsefulLinks: false,
                     },
                     isMobileLastStatus: true,
