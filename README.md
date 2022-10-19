@@ -1,14 +1,23 @@
-[comment]: <> (CTRL + SHIF + V to preview markdown in VSCode)
 
-Work in progress...👨‍💻
+[comment]: <> (CTRL + SHIF + V to preview markdown in VSCode)
 
 # Description
 
-Web page to show my dev skills.
+Web page to present the technologies and tools that are in my area of expertise.
 
 Built with VUE.JS and Vuetify UI library.
 
-## Available
+
+### Language
+English
+
+## Techs
+- [Vue](https://vuejs.org/)
+- [Vuetify](https://vuetifyjs.com/en/)
+- [Material Design Icons](https://materialdesignicons.com/)
+- [CSS Transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions)
+
+## It is online!
 
 https://skills.jvictor.com.br
 
