@@ -4,9 +4,8 @@ const JVICTOR_JS_TEXT_MENTION_HTML = '<a href="https://github.com/jvictorjs" tar
 
 const SOCIAL_MEDIA = [
   { name: "github", url: "https://github.com/jvictorjs", icon: "mdi-github", profile: "jvictorjs", tooltip: "GitHub profile" },
-  { name: "twitter", url: "https://twitter.com/jvictor_js", icon: "mdi-twitter", profile: "@jvictor_js", tooltip: "Twitter profile" },
-  { name: "portfolio", url: "https://portfolio.jvictor.com.br", icon: "mdi-briefcase", profile: "Porfolio", tooltip: "Portfolio web page" },
-  { name: "youtube", url: "https://www.youtube.com/user/jvwrCIN", icon: "mdi-youtube", profile: "YouTube", tooltip: "My YouTube Channel" },
+  { name: "portfolio", url: "https://portfolio.jvictor.com.br", icon: "mdi-briefcase", profile: "Portfolio", tooltip: "Portfolio web page" },
+  { name: "resume", url: "./assets/jvictor-resume.pdf", icon: "mdi-file-document", profile: "Resume", tooltip: "Download my resume (PDF)" },
   {
     name: "linkedin",
     url: "https://www.linkedin.com/in/joão-victor-ramos-6570a21b7/",
@@ -14,13 +13,9 @@ const SOCIAL_MEDIA = [
     profile: "LinkedIn",
     tooltip: "LinkedIn profile",
   },
-  {
-    name: "learn",
-    url: "https://courses.jvictor.com.br",
-    icon: "mdi-school",
-    profile: "Course",
-    tooltip: "Learn JavaScript with my video lessons",
-  },
+  { name: "twitter", url: "https://twitter.com/jvictor_js", icon: "mdi-twitter", profile: "@jvictor_js", tooltip: "Twitter profile" },
+  { name: "youtube", url: "https://www.youtube.com/user/jvwrCIN", icon: "mdi-youtube", profile: "YouTube", tooltip: "My YouTube Channel" },
+  { name: "learn", url: "https://courses.jvictor.com.br", icon: "mdi-school", profile: "Course", tooltip: "Learn JavaScript with my video lessons" },
 ];
 
 const PROJECTS = [
@@ -70,7 +65,7 @@ const PROJECTS = [
     appType: "Web",
     year: 2022,
     tech: "React",
-    description: "Online course plataform for my coding video lessons.",
+    description: "Online course platform for my coding video lessons.",
     language: "English<br>Lessons content: Brazilian Portuguese audio with English subtitles",
     languageSymbol: "EN/PT",
     urlLabel: "course.jvictor.com.br",
@@ -240,7 +235,7 @@ const PROJECTS = [
     appType: "Web",
     year: 2020,
     tech: "Qlik Sense",
-    description: "BI Dashboard created using to present data from the Brazil's Ministry of Economy.",
+    description: "BI Dashboard created to present data from the Brazil's Ministry of Economy.",
     language: "Brazilian Portuguese",
     languageSymbol: "PT",
     urlLabel: "painelfundoafundo.economia.gov.br",
@@ -397,7 +392,7 @@ const PROJECTS = [
     appType: "Telegram Bot",
     year: 2019,
     tech: "Google Apps Script",
-    description: "A useful chatbot that reminds you when it is time to take that pill. This is one of many Telegram Bots I created.",
+    description: "A useful chatbot that reminds you when it is time to take that pill. This is one of the many Telegram Bots I created.",
     language: "Brazilian Portuguese",
     languageSymbol: "PT",
     urlLabel: "",
