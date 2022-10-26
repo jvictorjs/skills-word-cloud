@@ -370,8 +370,8 @@ const PROJECTS = [
     ],
   },
   {
-    name: "Firesafe (hackaton prototype)",
-    nameFull: "Firesafe (hackaton prototype)",
+    name: "Firesafe (hackathon prototype)",
+    nameFull: "Firesafe (hackathon prototype)",
     appType: "Mobile",
     year: 2020,
     tech: "React Native",
