@@ -21,10 +21,10 @@ https://vuetifyjs.com/en/getting-started/installation/#usage-with-cdn
 
 If you want to build a quick demo project, this app is a good example of how a simple Vue setup from CDN can be used.
 
-The ideia of creating an app with Vue directly from a CDN is based on:
+The idea of creating an app with Vue directly from a CDN is based on:
 
 - No need for specific setup to build: you can use Vue from anywhere
-- Focus on simplicity and speed to create a quick MVP that demonstrade the usage of HTML, CSS and JS
+- Focus on simplicity and speed to create a quick MVP that demonstrate the usage of HTML, CSS and JS
 - Everything is portable: others can easily change stuff
 - It is a simple page with no such complex functionalities.
 
